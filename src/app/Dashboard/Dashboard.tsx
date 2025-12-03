@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Particles from "@/components/Backgrounds/Particles";
 import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
+import ProfileCard from "@/components/ProfileCard/ProfileCard";
 
 export default function Dashboard() {
   const [isDark, setIsDark] = useState(true);
@@ -33,7 +34,7 @@ export default function Dashboard() {
       </div>
 
       {/* Particles Background */}
-      <div className="absolute inset-0" style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0 }}>
+      <div className="absolute inset-0 pointer-events-auto" style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1 }}>
         <Particles
           particleColors={isDark ? ["#ffffff", "#ffffff"] : ["#1e293b", "#334155", "#475569"]}
           particleCount={200}
@@ -44,6 +45,24 @@ export default function Dashboard() {
           alphaParticles={false}
           disableRotation={false}
         />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-16 pointer-events-none">
+        <div className="pointer-events-auto">
+          <ProfileCard
+            name="Luis Betancourt"
+            title="Full Stack Developer"
+            handle="luisbetancourt"
+            status="Available for work"
+            contactText="Contact Me"
+            avatarUrl="/avatar.png"
+            showUserInfo={true}
+            enableTilt={true}
+            enableMobileTilt={false}
+            onContactClick={() => console.log('Contact clicked')}
+          />
+        </div>
       </div>
     </div>
   );
