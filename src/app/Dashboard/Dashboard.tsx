@@ -6,13 +6,14 @@ import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText } from "lucide-react";
+import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 
 export default function Dashboard() {
   const [isDark, setIsDark] = useState(true);
@@ -114,6 +115,81 @@ export default function Dashboard() {
                 onContactClick={() => console.log("Contact clicked")}
               />
             </div>
+          </div>
+
+          {/* Projects Section */}
+          <div className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              Featured Projects
+            </h3>
+            <BentoGrid className="w-full">
+              <BentoCard
+                name="ERP GGL"
+                className="col-span-3 lg:col-span-2"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
+                }
+                Icon={Database}
+                description="Sistema ERP corporativo completo para finanzas, compras, inventarios y RRHH. Desarrollo en Laravel, PHP y AngularJS con MariaDB."
+                href="#"
+                cta="Ver proyecto"
+              />
+              <BentoCard
+                name="LEGACY"
+                className="col-span-3 lg:col-span-1"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20" />
+                }
+                Icon={Rocket}
+                description="Plataforma de networking empresarial con cursos, eventos y salas de comunicación. SPA con React, Inertia.js y Laravel Sanctum."
+                href="#"
+                cta="Ver proyecto"
+              />
+              <BentoCard
+                name="COSMOCARRIER"
+                className="col-span-3 lg:col-span-1"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/20" />
+                }
+                Icon={FileText}
+                description="Sistema de cotización automatizada para servicios de internet con ROI en tiempo real y calculadora dinámica."
+                href="#"
+                cta="Ver proyecto"
+              />
+              <BentoCard
+                name="SIGIL"
+                className="col-span-3 lg:col-span-2"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20" />
+                }
+                Icon={Shield}
+                description="Sistema de gestión de incidencias laborales para SICT Durango. Dashboard interactivo con React, Leaflet y SQL Server."
+                href="#"
+                cta="Ver proyecto"
+              />
+              <BentoCard
+                name="NOC"
+                className="col-span-3 lg:col-span-2"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20" />
+                }
+                Icon={Code}
+                description="Plataforma de reporte de fallas de internet. Construcción modular con React y Vite, integrada con backend existente."
+                href="#"
+                cta="Ver proyecto"
+              />
+              <BentoCard
+                name="ACCA"
+                className="col-span-3 lg:col-span-1"
+                background={
+                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-rose-500/20" />
+                }
+                Icon={Briefcase}
+                description="Plataforma de gestión de recursos para asociación contra el cáncer. Módulos de donaciones con React y .NET."
+                href="#"
+                cta="Ver proyecto"
+              />
+            </BentoGrid>
           </div>
 
           {/* Bottom Section: Tech Stack */}
