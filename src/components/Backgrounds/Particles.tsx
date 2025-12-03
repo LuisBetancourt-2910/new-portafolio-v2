@@ -207,8 +207,10 @@ const Particles: React.FC<ParticlesProps> = ({
       program.uniforms.uTime.value = elapsed * 0.001;
 
       if (moveParticlesOnHover) {
-        particles.position.x = -mouseRef.current.x * particleHoverFactor;
-        particles.position.y = -mouseRef.current.y * particleHoverFactor;
+        const targetX = -mouseRef.current.x * particleHoverFactor;
+        const targetY = -mouseRef.current.y * particleHoverFactor;
+        particles.position.x += (targetX - particles.position.x) * 0.05;
+        particles.position.y += (targetY - particles.position.y) * 0.05;
       } else {
         particles.position.x = 0;
         particles.position.y = 0;

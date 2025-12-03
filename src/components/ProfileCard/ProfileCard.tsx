@@ -20,7 +20,7 @@ const adjust = (v: number, fMin: number, fMax: number, tMin: number, tMax: numbe
 interface ProfileCardProps {
   avatarUrl?: string;
   iconUrl?: string;
-  grainUrl?: string;
+  grainUrl?: "https://grainy-gradients.vercel.app/noise.svg";
   innerGradient?: string;
   behindGlowEnabled?: boolean;
   behindGlowColor?: string;
