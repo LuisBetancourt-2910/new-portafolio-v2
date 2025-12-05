@@ -35,6 +35,7 @@
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: none;
+  width: 100%;
 }
 
 .pc-behind {
@@ -58,8 +59,8 @@
 }
 
 .pc-card {
-  height: 80svh;
-  max-height: 540px;
+  width: 100%;
+  height: auto;
   display: grid;
   aspect-ratio: 0.718;
   border-radius: var(--card-radius);
@@ -73,6 +74,14 @@
   background: rgba(0, 0, 0, 0.9);
   backface-visibility: hidden;
   overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .pc-card {
+    height: 80svh;
+    width: auto;
+    max-height: 540px;
+  }
 }
 
 .pc-card:hover,
@@ -440,8 +449,10 @@
 
 @media (max-width: 768px) {
   .pc-card {
-    height: 70svh;
-    max-height: 450px;
+    /* height: 70svh; */
+    /* max-height: 450px; */
+    width: 100%;
+    height: auto;
   }
 
   .pc-details {
@@ -486,8 +497,10 @@
 
 @media (max-width: 480px) {
   .pc-card {
-    height: 60svh;
-    max-height: 380px;
+    /* height: 60svh; */
+    /* max-height: 380px; */
+    width: 100%;
+    height: auto;
   }
 
   .pc-details {
@@ -534,8 +547,10 @@
 
 @media (max-width: 320px) {
   .pc-card {
-    height: 55svh;
-    max-height: 320px;
+    /* height: 55svh; */
+    /* max-height: 320px; */
+    width: 100%;
+    height: auto;
   }
 
   .pc-details h3 {
