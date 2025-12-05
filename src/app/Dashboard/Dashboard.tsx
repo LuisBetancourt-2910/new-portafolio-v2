@@ -7,7 +7,7 @@ import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X } from "lucide-react";
+import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X, Download } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export default function Dashboard() {
   const [isDark, setIsDark] = useState(true);
@@ -75,7 +76,7 @@ export default function Dashboard() {
           zIndex: 1,
         }}
       >
-        <div className="pointer-events-auto w-full h-full">
+        <div className="pointer-events-none w-full h-full">
           <Particles
             particleColors={
               isDark
@@ -94,7 +95,7 @@ export default function Dashboard() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8 pt-32 pointer-events-none">
+      <div className="relative z-20 flex items-center justify-center min-h-screen px-4 py-8 pt-32 pointer-events-none">
         <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 pointer-events-none">
           {/* Top Section: About Me (Left) and Profile Card (Right) */}
           <div id="about" className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -124,7 +125,7 @@ export default function Dashboard() {
               <ProfileCard
                 name="Luis Betancourt"
                 title="Full Stack Developer"
-                handle="luisbetancourt"
+                handle="LuisBetancourt-2910"
                 status="Available for work"
                 contactText="Contact Me"
                 avatarUrl="/avatar.png"
@@ -248,6 +249,47 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+        {/* CV Section */}
+          <div id="cv" className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              Curriculum Vitae
+            </h3>
+            <div className="w-full max-w-4xl">
+              <div className="relative group overflow-hidden rounded-3xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl">
+                {/* CV Image Preview Background */}
+                <div className="relative w-full h-[600px] overflow-hidden">
+                  <img
+                    src="/cv.png"
+                    alt="CV Preview"
+                    className="w-full h-full object-contain object-center bg-white"
+                  />
+                  {/* Overlay with gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent pointer-events-none" />
+                </div>
+                
+                {/* Content Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 pointer-events-none">
+                  <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                    <div>
+                      <h4 className="text-2xl font-bold text-white mb-2">
+                        José Luis García Betancourt
+                      </h4>
+                      <p className="text-slate-200 text-sm">
+                        Full Stack Developer | Ingeniero en Sistemas Computacionales
+                      </p>
+                    </div>
+                    <InteractiveHoverButton
+                      onClick={downloadCV}
+                      className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0 pointer-events-auto"
+                    >
+                      Descargar CV
+                    </InteractiveHoverButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
       {/* Mobile Menu Button */}
       <motion.button
@@ -429,7 +471,7 @@ export default function Dashboard() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <motion.button 
-                      onClick={downloadCV}
+                      onClick={() => scrollToSection('cv')}
                       className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
@@ -554,7 +596,7 @@ export default function Dashboard() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <DockIcon 
-                  onClick={downloadCV}
+                  onClick={() => scrollToSection('cv')}
                   className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
                 >
                   <FileText className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
