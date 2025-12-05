@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Particles from "@/components/Backgrounds/Particles";
 import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield } from "lucide-react";
+import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -17,6 +18,7 @@ import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 
 export default function Dashboard() {
   const [isDark, setIsDark] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Verificar el tema inicial
@@ -35,6 +37,24 @@ export default function Dashboard() {
 
     return () => observer.disconnect();
   }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setMobileMenuOpen(false);
+    }
+  };
+
+  const downloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/CV Jose Luis Garcia Betancourt.pdf';
+    link.download = 'CV_Luis_Betancourt.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-400">
@@ -77,14 +97,14 @@ export default function Dashboard() {
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8 pt-32 pointer-events-none">
         <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 pointer-events-none">
           {/* Top Section: About Me (Left) and Profile Card (Right) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div id="about" className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* About Me - Left */}
             <div className="flex items-center justify-center lg:justify-end pointer-events-auto">
               <div className="h-[80svh] max-h-[540px] w-full max-w-[387px] p-8 rounded-[30px] bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl flex flex-col justify-center">
-                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-                  About Me
+                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent text-left">
+                  Acerca de Mí
                 </h2>
-                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-justify">
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-left">
                   Ingeniero en Sistemas Computacionales con especialidad en
                   Ciberseguridad y experiencia en desarrollo Full Stack. He
                   participado en el diseño y desarrollo de sistemas
@@ -118,9 +138,9 @@ export default function Dashboard() {
           </div>
 
           {/* Projects Section */}
-          <div className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
+          <div id="projects" className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-              Featured Projects
+              Proyectos en los que he participado
             </h3>
             <BentoGrid className="w-full">
               <BentoCard
@@ -193,7 +213,7 @@ export default function Dashboard() {
           </div>
 
           {/* Bottom Section: Tech Stack */}
-          <div className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto">
+          <div id="techstack" className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
               Tech Stack
             </h3>
@@ -229,13 +249,215 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Dock Navigation */}
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+      {/* Mobile Menu Button */}
+      <motion.button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all text-slate-900 dark:text-white pointer-events-auto"
+        whileTap={{ scale: 0.95 }}
+        animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={mobileMenuOpen ? "close" : "open"}
+            initial={{ opacity: 0, rotate: -90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.15 }}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </motion.div>
+        </AnimatePresence>
+      </motion.button>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="md:hidden fixed top-20 left-6 z-50 pointer-events-auto"
+            initial={{ opacity: 0, scale: 0.9, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            <div className="flex flex-col gap-3 p-3 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl">
+            <TooltipProvider>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => scrollToSection('about')}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <User className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>About</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => scrollToSection('projects')}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Briefcase className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>Projects</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => scrollToSection('techstack')}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Code className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>Tech Stack</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => window.location.href = 'mailto:joseluisgarciabeta@gmail.com'}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Mail className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>Email</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div 
+                className="w-full h-px bg-slate-900/20 dark:bg-white/20 my-1"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.25, duration: 0.3 }}
+              />
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => window.open('https://github.com/LuisBetancourt-2910', '_blank')}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Github className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>GitHub</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={() => window.open('https://www.linkedin.com/in/luisbetancourt2910', '_blank')}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Linkedin className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>LinkedIn</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <motion.button 
+                      onClick={downloadCV}
+                      className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 transition-all"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FileText className="w-5 h-5 text-slate-900 dark:text-white" />
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>CV</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+            </TooltipProvider>
+          </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop Dock Navigation */}
+      <div className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
         <TooltipProvider>
           <Dock iconSize={48} iconMagnification={64} iconDistance={100} className="mt-0">
             <Tooltip>
               <TooltipTrigger asChild>
-                <DockIcon className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10">
+                <DockIcon 
+                  onClick={() => scrollToSection('about')}
+                  className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
+                >
                   <User className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
@@ -246,23 +468,29 @@ export default function Dashboard() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <DockIcon className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10">
-                  <Code className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
-                </DockIcon>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Tech Stack</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <DockIcon className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10">
+                <DockIcon 
+                  onClick={() => scrollToSection('projects')}
+                  className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
+                >
                   <Briefcase className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Projects</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DockIcon 
+                  onClick={() => scrollToSection('techstack')}
+                  className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
+                >
+                  <Code className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                </DockIcon>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Tech Stack</p>
               </TooltipContent>
             </Tooltip>
 
@@ -325,7 +553,10 @@ export default function Dashboard() {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <DockIcon className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10">
+                <DockIcon 
+                  onClick={downloadCV}
+                  className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
+                >
                   <FileText className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
