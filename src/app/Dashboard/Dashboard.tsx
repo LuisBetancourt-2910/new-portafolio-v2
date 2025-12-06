@@ -74,6 +74,8 @@ export default function Dashboard() {
           top: 0,
           left: 0,
           zIndex: 1,
+          willChange: "transform",
+          transform: "translateZ(0)",
         }}
       >
         <div className="pointer-events-none w-full h-full">
