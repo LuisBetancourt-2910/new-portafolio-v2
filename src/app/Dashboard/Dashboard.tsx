@@ -7,7 +7,7 @@ import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X, Download } from "lucide-react";
+import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X, Download, FileCheck } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -106,7 +106,16 @@ export default function Dashboard() {
                   <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent text-left">
                     Acerca de Mí
                   </h2>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-left">
+                  
+                  {/* Texto corto para móviles */}
+                  <p className="lg:hidden text-slate-700 dark:text-slate-300 leading-relaxed text-left">
+                    Ingeniero en Sistemas Computacionales con especialidad en Ciberseguridad y desarrollo Full Stack. 
+                    Experiencia diseñando sistemas empresariales (ERP, plataformas financieras, networking) con React, Node.js, 
+                    Laravel y SQL Server. Enfocado en crear soluciones escalables, seguras y de alto impacto bajo metodologías ágiles.
+                  </p>
+                  
+                  {/* Texto completo para desktop */}
+                  <p className="hidden lg:block text-slate-700 dark:text-slate-300 leading-relaxed text-left">
                     Ingeniero en Sistemas Computacionales con especialidad en
                     Ciberseguridad y experiencia en desarrollo Full Stack. He
                     participado en el diseño y desarrollo de sistemas
@@ -150,67 +159,134 @@ export default function Dashboard() {
                 name="ERP GGL"
                 className="col-span-3 lg:col-span-2"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
+                  <>
+                    <img 
+                      src="/projects/erp-ggl/cover.png" 
+                      alt="ERP GGL Dashboard"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Database}
                 description="Sistema ERP corporativo completo para finanzas, compras, inventarios y RRHH. Desarrollo en Laravel, PHP y AngularJS con MariaDB."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="LEGACY"
                 className="col-span-3 lg:col-span-1"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20" />
+                  <>
+                    <img 
+                      src="/projects/legacy/cover.png" 
+                      alt="LEGACY Platform"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Rocket}
                 description="Plataforma de networking empresarial con cursos, eventos y salas de comunicación. SPA con React, Inertia.js y Laravel Sanctum."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="COSMOCARRIER"
                 className="col-span-3 lg:col-span-1"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/20" />
+                  <>
+                    <img 
+                      src="/projects/cosmocarrier/cover.png" 
+                      alt="COSMOCARRIER Platform"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={FileText}
                 description="Sistema de cotización automatizada para servicios de internet con ROI en tiempo real y calculadora dinámica."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="SIGIL"
                 className="col-span-3 lg:col-span-2"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20" />
+                  <>
+                    <img 
+                      src="/projects/sigil/cover.svg" 
+                      alt="SIGIL Dashboard"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Shield}
                 description="Sistema de gestión de incidencias laborales para SICT Durango. Dashboard interactivo con React, Leaflet y SQL Server."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="NOC"
                 className="col-span-3 lg:col-span-2"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20" />
+                  <>
+                    <img 
+                      src="/projects/noc/cover.png" 
+                      alt="NOC Platform"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Code}
                 description="Plataforma de reporte de fallas de internet. Construcción modular con React y Vite, integrada con backend existente."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="ACCA"
                 className="col-span-3 lg:col-span-1"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-rose-500/20" />
+                  <>
+                    <img 
+                      src="/projects/acca/cover.svg" 
+                      alt="ACCA Platform"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Briefcase}
                 description="Plataforma de gestión de recursos para asociación contra el cáncer. Módulos de donaciones con React y .NET."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
+              />
+              <BentoCard
+                name="Centro Multipagos"
+                className="col-span-3 lg:col-span-2"
+                background={
+                  <>
+                    <img 
+                      src="/projects/MultasDGO/cover.png" 
+                      alt="Centro Multipagos"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
+                }
+                Icon={FileCheck}
+                description="Sistema integral de gestión de multas de tránsito con wizard de 4 pasos, firmas digitales, PDFs con QR y notificaciones automáticas. Laravel + React + AWS S3."
+                href="#"
+                cta="Ver proyecto"
+                hasImage={true}
               />
             </BentoGrid>
           </div>

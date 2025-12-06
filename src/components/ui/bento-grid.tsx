@@ -17,6 +17,7 @@ interface BentoCardProps extends ComponentPropsWithoutRef<"div"> {
   description: string
   href: string
   cta: string
+  hasImage?: boolean
 }
 
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
@@ -41,6 +42,7 @@ const BentoCard = ({
   description,
   href,
   cta,
+  hasImage = false,
   ...props
 }: BentoCardProps) => (
   <div
@@ -58,11 +60,20 @@ const BentoCard = ({
     <div>{background}</div>
     <div className="p-4">
       <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10">
-        <Icon className="h-12 w-12 origin-left transform-gpu text-neutral-800 dark:text-neutral-200 transition-all duration-300 ease-in-out group-hover:scale-75" />
-        <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+        <Icon className={cn(
+          "h-12 w-12 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75",
+          hasImage ? "text-white" : "text-neutral-800 dark:text-neutral-200"
+        )} />
+        <h3 className={cn(
+          "text-xl font-semibold",
+          hasImage ? "text-white" : "text-neutral-900 dark:text-neutral-100"
+        )}>
           {name}
         </h3>
-        <p className="max-w-lg text-neutral-600 dark:text-neutral-300">{description}</p>
+        <p className={cn(
+          "max-w-lg",
+          hasImage ? "text-white/90" : "text-neutral-600 dark:text-neutral-300"
+        )}>{description}</p>
       </div>
 
       <div
@@ -74,7 +85,10 @@ const BentoCard = ({
           variant="link"
           asChild
           size="sm"
-          className="pointer-events-auto p-0"
+          className={cn(
+            "pointer-events-auto p-0",
+            hasImage && "text-white hover:text-white/80"
+          )}
         >
           <a href={href}>
             {cta}
@@ -93,7 +107,10 @@ const BentoCard = ({
         variant="link"
         asChild
         size="sm"
-        className="pointer-events-auto p-0"
+        className={cn(
+          "pointer-events-auto p-0",
+          hasImage && "text-white hover:text-white/80"
+        )}
       >
         <a href={href}>
           {cta}
