@@ -134,7 +134,7 @@ export default function Dashboard() {
                   showUserInfo={true}
                   enableTilt={true}
                   enableMobileTilt={false}
-                  onContactClick={() => console.log("Contact clicked")}
+                  onContactClick={() => window.location.href = 'mailto:joseluisgarciabeta@gmail.com'}
                 />
               </div>
             </div>
