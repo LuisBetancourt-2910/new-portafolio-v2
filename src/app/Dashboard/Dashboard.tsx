@@ -48,12 +48,7 @@ export default function Dashboard() {
   };
 
   const downloadCV = () => {
-    const link = document.createElement('a');
-    link.href = '/CV Jose Luis Garcia Betancourt.pdf';
-    link.download = 'CV_Luis_Betancourt.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.location.href = '/api/cv';
     setMobileMenuOpen(false);
   };
 
