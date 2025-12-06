@@ -106,7 +106,16 @@ export default function Dashboard() {
                   <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent text-left">
                     Acerca de Mí
                   </h2>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-left">
+                  
+                  {/* Texto corto para móviles */}
+                  <p className="lg:hidden text-slate-700 dark:text-slate-300 leading-relaxed text-left">
+                    Ingeniero en Sistemas Computacionales con especialidad en Ciberseguridad y desarrollo Full Stack. 
+                    Experiencia diseñando sistemas empresariales (ERP, plataformas financieras, networking) con React, Node.js, 
+                    Laravel y SQL Server. Enfocado en crear soluciones escalables, seguras y de alto impacto bajo metodologías ágiles.
+                  </p>
+                  
+                  {/* Texto completo para desktop */}
+                  <p className="hidden lg:block text-slate-700 dark:text-slate-300 leading-relaxed text-left">
                     Ingeniero en Sistemas Computacionales con especialidad en
                     Ciberseguridad y experiencia en desarrollo Full Stack. He
                     participado en el diseño y desarrollo de sistemas
@@ -274,7 +283,7 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={FileCheck}
-                description="Sistema integral de gestión de multas de tránsito. Plataforma full-stack con wizard de 4 pasos, firmas digitales, generación de PDFs con QR, notificaciones automáticas y dashboard analítico. Laravel + React + AWS S3."
+                description="Sistema integral de gestión de multas de tránsito con wizard de 4 pasos, firmas digitales, PDFs con QR y notificaciones automáticas. Laravel + React + AWS S3."
                 href="#"
                 cta="Ver proyecto"
                 hasImage={true}
