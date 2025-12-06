@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="sigil-bg" x1="0" y1="0" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0891b2"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#sigil-bg)"/>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  
+  <!-- Map mockup -->
+  <g opacity="0.3">
+    <!-- Map lines -->
+    <path d="M100,150 Q200,100 300,120 T500,140 T700,160" stroke="rgba(255,255,255,0.4)" stroke-width="3" fill="none"/>
+    <path d="M120,250 L280,240 L400,260 L580,250 L720,270" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
+    <path d="M150,350 Q300,330 450,360 T700,370" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Map markers -->
+  <g filter="drop-shadow(0 4px 8px rgba(0,0,0,0.3))">
+    <!-- Marker 1 -->
+    <circle cx="250" cy="200" r="12" fill="#ef4444"/>
+    <circle cx="250" cy="200" r="20" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.5"/>
+    
+    <!-- Marker 2 -->
+    <circle cx="400" cy="280" r="12" fill="#f59e0b"/>
+    <circle cx="400" cy="280" r="20" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
+    
+    <!-- Marker 3 -->
+    <circle cx="550" cy="240" r="12" fill="#10b981"/>
+    <circle cx="550" cy="240" r="20" fill="none" stroke="#10b981" stroke-width="2" opacity="0.5"/>
+    
+    <!-- Marker 4 -->
+    <circle cx="320" cy="360" r="12" fill="#ef4444"/>
+    <circle cx="320" cy="360" r="20" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.5"/>
+  </g>
+  
+  <!-- Dashboard cards -->
+  <g transform="translate(50, 420)">
+    <rect width="180" height="120" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <text x="20" y="35" fill="white" font-size="14" font-weight="bold" opacity="0.9">Incidencias Activas</text>
+    <text x="20" y="75" fill="white" font-size="36" font-weight="bold">24</text>
+    <rect x="20" y="95" width="80" height="4" rx="2" fill="rgba(239,68,68,0.6)"/>
+  </g>
+  
+  <g transform="translate(260, 420)">
+    <rect width="180" height="120" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <text x="20" y="35" fill="white" font-size="14" font-weight="bold" opacity="0.9">En Proceso</text>
+    <text x="20" y="75" fill="white" font-size="36" font-weight="bold">12</text>
+    <rect x="20" y="95" width="60" height="4" rx="2" fill="rgba(245,158,11,0.6)"/>
+  </g>
+  
+  <g transform="translate(470, 420)">
+    <rect width="180" height="120" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <text x="20" y="35" fill="white" font-size="14" font-weight="bold" opacity="0.9">Resueltas</text>
+    <text x="20" y="75" fill="white" font-size="36" font-weight="bold">86</text>
+    <rect x="20" y="95" width="120" height="4" rx="2" fill="rgba(16,185,129,0.6)"/>
+  </g>
+  
+  <!-- Shield icon -->
+  <g transform="translate(650, 80)" opacity="0.15">
+    <path d="M50,10 L90,25 L90,60 Q90,90 50,110 Q10,90 10,60 L10,25 Z" fill="white"/>
+    <path d="M50,35 L40,50 L48,50 L48,70 L52,70 L52,50 L60,50 Z" fill="url(#sigil-bg)"/>
+  </g>
+</svg>

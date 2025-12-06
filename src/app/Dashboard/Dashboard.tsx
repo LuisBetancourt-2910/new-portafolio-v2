@@ -207,12 +207,20 @@ export default function Dashboard() {
                 name="SIGIL"
                 className="col-span-3 lg:col-span-2"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20" />
+                  <>
+                    <img 
+                      src="/projects/sigil/cover.svg" 
+                      alt="SIGIL Dashboard"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Shield}
                 description="Sistema de gestión de incidencias laborales para SICT Durango. Dashboard interactivo con React, Leaflet y SQL Server."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="NOC"
@@ -237,12 +245,20 @@ export default function Dashboard() {
                 name="ACCA"
                 className="col-span-3 lg:col-span-1"
                 background={
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 to-rose-500/20" />
+                  <>
+                    <img 
+                      src="/projects/acca/cover.svg" 
+                      alt="ACCA Platform"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                  </>
                 }
                 Icon={Briefcase}
                 description="Plataforma de gestión de recursos para asociación contra el cáncer. Módulos de donaciones con React y .NET."
                 href="#"
                 cta="Ver proyecto"
+                hasImage={true}
               />
               <BentoCard
                 name="Centro Multipagos"
