@@ -22,6 +22,19 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
   },
+  openGraph: {
+    title: "Luis Betancourt — Portafolio",
+    description: "Portafolio profesional de Luis Betancourt",
+    url: "https://betanworks.dev",
+    siteName: "Luis Betancourt — Portafolio",
+    locale: "es_MX",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Luis Betancourt — Portafolio",
+    description: "Portafolio profesional de Luis Betancourt",
+  },
 };
 
 export default function RootLayout({
