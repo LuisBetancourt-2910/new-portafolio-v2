@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Briefcase handle -->
+  <rect x="22" y="10" width="20" height="4" rx="2" fill="#000"/>
+  
+  <!-- Main briefcase body - wider and more rectangular -->
+  <rect x="10" y="20" width="44" height="28" rx="3" fill="#000"/>
+  
+  <!-- Top compartment/lid detail -->
+  <rect x="10" y="20" width="44" height="8" rx="3" fill="#000" opacity="0.9"/>
+  
+  <!-- Lock/clasp detail in center -->
+  <rect x="30" y="32" width="4" height="8" rx="1" fill="#fff"/>
+  <circle cx="32" cy="36" r="2.5" fill="#fff"/>
+</svg>

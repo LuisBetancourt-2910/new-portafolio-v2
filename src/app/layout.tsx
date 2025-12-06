@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   },
   description: "Portafolio profesional de Luis Betancourt",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
   },
 };
 
