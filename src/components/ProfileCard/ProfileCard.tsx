@@ -341,10 +341,17 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 className="avatar"
                 src={avatarUrl}
                 alt={`${name || 'User'} avatar`}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 onError={(e) => {
                   const t = e.target as HTMLImageElement;
+                  console.error('Error loading avatar:', avatarUrl);
                   t.style.display = 'none';
+                }}
+                onLoad={(e) => {
+                  const t = e.target as HTMLImageElement;
+                  console.log('Avatar loaded successfully:', avatarUrl);
                 }}
               />
               {showUserInfo && (
@@ -354,11 +361,14 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       <img
                         src={miniAvatarUrl || avatarUrl}
                         alt={`${name || 'User'} mini avatar`}
-                        loading="lazy"
+                        loading="eager"
+                        decoding="async"
                         onError={(e) => {
                           const t = e.target as HTMLImageElement;
-                          t.style.opacity = '0.5';
-                          t.src = avatarUrl;
+                          console.warn('Error loading mini avatar, using fallback');
+                          if (t.src !== avatarUrl) {
+                            t.src = avatarUrl;
+                          }
                         }}
                       />
                     </div>
