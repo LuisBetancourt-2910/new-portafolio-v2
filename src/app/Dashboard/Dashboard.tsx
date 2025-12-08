@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from 'next-intl';
 import Particles from "@/components/Backgrounds/Particles";
 import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
+import { LanguageToggler } from "@/components/LanguageToggler/language-toggler";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Dock, DockIcon } from "@/components/ui/dock";
@@ -18,6 +20,7 @@ import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export default function Dashboard() {
+  const t = useTranslations();
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -54,8 +57,9 @@ export default function Dashboard() {
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-400">
-      {/* Theme Toggler */}
-      <div className="fixed top-6 right-6 z-50">
+      {/* Theme and Language Togglers */}
+      <div className="fixed top-6 right-6 z-50 flex gap-3">
+        <LanguageToggler />
         <AnimatedThemeToggler className="p-3 rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all text-slate-900 dark:text-white" />
       </div>
 
@@ -101,28 +105,17 @@ export default function Dashboard() {
               <div className="flex items-center justify-center lg:justify-end pointer-events-auto w-full lg:flex-1">
                 <div className="h-auto lg:h-[80svh] lg:max-h-[540px] w-full p-8 rounded-[30px] bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl flex flex-col justify-center">
                   <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent text-left">
-                    Acerca de Mí
+                    {t('about.title')}
                   </h2>
                   
                   {/* Texto corto para móviles */}
                   <p className="lg:hidden text-slate-700 dark:text-slate-300 leading-relaxed text-left">
-                    Ingeniero en Sistemas Computacionales con especialidad en Ciberseguridad y desarrollo Full Stack. 
-                    Experiencia diseñando sistemas empresariales (ERP, plataformas financieras, networking) con React, Node.js, 
-                    Laravel y SQL Server. Enfocado en crear soluciones escalables, seguras y de alto impacto bajo metodologías ágiles.
+                    {t('about.descriptionShort')}
                   </p>
                   
                   {/* Texto completo para desktop */}
                   <p className="hidden lg:block text-slate-700 dark:text-slate-300 leading-relaxed text-left">
-                    Ingeniero en Sistemas Computacionales con especialidad en
-                    Ciberseguridad y experiencia en desarrollo Full Stack. He
-                    participado en el diseño y desarrollo de sistemas
-                    empresariales (ERP, cotizadores financieros, plataformas de
-                    networking, etc.) utilizando tecnologías como React, Node.js,
-                    Laravel y SQL Server. Hábil en la implementación de medidas de
-                    seguridad, optimización de bases de datos y desarrollo bajo
-                    metodologías ágiles (Scrum). Orientado a generar soluciones
-                    escalables que mejoren la eficiencia, reduzcan errores y
-                    aporten valor directo al negocio.
+                    {t('about.description')}
                   </p>
                 </div>
               </div>
@@ -130,11 +123,11 @@ export default function Dashboard() {
               {/* Profile Card - Right on Desktop, Top on Mobile */}
               <div className="flex items-center justify-center lg:justify-start pointer-events-auto w-full lg:w-auto">
                 <ProfileCard
-                  name="Luis Betancourt"
-                  title="Full Stack Developer"
-                  handle="LuisBetancourt-2910"
-                  status="Available for work"
-                  contactText="Contact Me"
+                  name={t('profile.name')}
+                  title={t('profile.title')}
+                  handle={t('profile.handle')}
+                  status={t('profile.status')}
+                  contactText={t('profile.contactBtn')}
                   avatarUrl="/avatar.png"
                   grainUrl="https://grainy-gradients.vercel.app/noise.svg"
                   showUserInfo={true}
@@ -149,11 +142,11 @@ export default function Dashboard() {
           {/* Projects Section */}
           <div id="projects" className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-              Proyectos en los que he participado
+              {t('projects.title')}
             </h3>
             <BentoGrid className="w-full">
               <BentoCard
-                name="ERP GGL"
+                name={t('projects.erp.title')}
                 className="col-span-3 lg:col-span-2"
                 background={
                   <>
@@ -166,13 +159,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={Database}
-                description="Sistema ERP corporativo completo para finanzas, compras, inventarios y RRHH. Desarrollo en Laravel, PHP y AngularJS con MariaDB."
+                description={t('projects.erp.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="LEGACY"
+                name={t('projects.legacy.title')}
                 className="col-span-3 lg:col-span-1"
                 background={
                   <>
@@ -185,13 +178,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={Rocket}
-                description="Plataforma de networking empresarial con cursos, eventos y salas de comunicación. SPA con React, Inertia.js y Laravel Sanctum."
+                description={t('projects.legacy.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="COSMOCARRIER"
+                name={t('projects.cosmocarrier.title')}
                 className="col-span-3 lg:col-span-1"
                 background={
                   <>
@@ -204,13 +197,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={FileText}
-                description="Sistema de cotización automatizada para servicios de internet con ROI en tiempo real y calculadora dinámica."
+                description={t('projects.cosmocarrier.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="SIGIL"
+                name={t('projects.sigil.title')}
                 className="col-span-3 lg:col-span-2"
                 background={
                   <>
@@ -223,13 +216,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={Shield}
-                description="Sistema de gestión de incidencias laborales para SICT Durango. Dashboard interactivo con React, Leaflet y SQL Server."
+                description={t('projects.sigil.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="NOC"
+                name={t('projects.noc.title')}
                 className="col-span-3 lg:col-span-2"
                 background={
                   <>
@@ -242,13 +235,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={Code}
-                description="Plataforma de reporte de fallas de internet. Construcción modular con React y Vite, integrada con backend existente."
+                description={t('projects.noc.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="ACCA"
+                name={t('projects.acca.title')}
                 className="col-span-3 lg:col-span-1"
                 background={
                   <>
@@ -261,13 +254,13 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={Briefcase}
-                description="Plataforma de gestión de recursos para asociación contra el cáncer. Módulos de donaciones con React y .NET."
+                description={t('projects.acca.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
               <BentoCard
-                name="Centro Multipagos"
+                name={t('projects.multas.title')}
                 className="col-span-3 lg:col-span-2"
                 background={
                   <>
@@ -280,9 +273,9 @@ export default function Dashboard() {
                   </>
                 }
                 Icon={FileCheck}
-                description="Sistema integral de gestión de multas de tránsito con wizard de 4 pasos, firmas digitales, PDFs con QR y notificaciones automáticas. Laravel + React + AWS S3."
+                description={t('projects.multas.description')}
                 href="#"
-                cta="Ver proyecto"
+                cta={t('projects.viewProject')}
                 hasImage={true}
               />
             </BentoGrid>
@@ -291,7 +284,7 @@ export default function Dashboard() {
           {/* Bottom Section: Tech Stack */}
           <div id="techstack" className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-              Tech Stack
+              {t('skills.title')}
             </h3>
             <IconCloud
               images={[
@@ -358,7 +351,7 @@ export default function Dashboard() {
                       onClick={downloadCV}
                       className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0 pointer-events-auto"
                     >
-                      Descargar CV
+                      {t('profile.downloadCV')}
                     </InteractiveHoverButton>
                   </div>
                 </div>

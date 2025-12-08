@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "profile": {
+    "name": "Luis Betancourt",
+    "title": "Full Stack Developer",
+    "handle": "LuisBetancourt-2910",
+    "status": "Available for work",
+    "contactBtn": "Contact Me",
+    "downloadCV": "Download CV"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Computer Systems Engineer with specialization in Cybersecurity and experience in Full Stack development. I have participated in the design and development of enterprise systems (ERP, financial quoters, networking platforms, etc.) using technologies such as React, Node.js, Laravel, and SQL Server. Skilled in implementing security measures, database optimization, and development under agile methodologies (Scrum). Oriented towards generating scalable solutions that improve efficiency, reduce errors, and provide direct value to the business.",
+    "descriptionShort": "Computer Systems Engineer with specialization in Cybersecurity and Full Stack development. Experience designing enterprise systems (ERP, financial platforms, networking) with React, Node.js, Laravel and SQL Server. Focused on creating scalable, secure and high-impact solutions under agile methodologies."
+  },
+  "skills": {
+    "title": "Tech Stack"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "viewProject": "View Project",
+    "legacy": {
+      "title": "Legacy - Networking System",
+      "description": "Enterprise networking platform with courses, events and communication rooms. SPA with React, Inertia.js and Laravel Sanctum."
+    },
+    "erp": {
+      "title": "ERP GGL",
+      "description": "Complete corporate ERP system for finance, purchases, inventory and HR. Development in Laravel, PHP and AngularJS with MariaDB."
+    },
+    "noc": {
+      "title": "NOC - Operations Center",
+      "description": "Internet outage reporting platform. Modular construction with React and Vite, integrated with existing backend."
+    },
+    "cosmocarrier": {
+      "title": "CosmoCarrier",
+      "description": "Automated quotation system for internet services with real-time ROI and dynamic calculator."
+    },
+    "sigil": {
+      "title": "SIGIL",
+      "description": "Labor incident management system for SICT Durango. Interactive dashboard with React, Leaflet and SQL Server."
+    },
+    "acca": {
+      "title": "ACCA",
+      "description": "Resource management platform for cancer association. Donation modules with React and .NET."
+    },
+    "multas": {
+      "title": "Multipayment Center",
+      "description": "Comprehensive traffic fines management system with 4-step wizard, digital signatures, QR PDFs and automatic notifications. Laravel + React + AWS S3."
+    }
+  },
+  "contact": {
+    "title": "Ready to work together?",
+    "description": "I'm available for freelance projects and job opportunities. Let's talk!",
+    "sendEmail": "Send Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "madeWith": "Made with",
+    "by": "by"
+  }
+}
