@@ -279,6 +279,7 @@
   backface-visibility: hidden;
   z-index: 6;
   position: relative;
+  isolation: isolate;
 }
 
 .pc-avatar-content .avatar {
@@ -298,6 +299,14 @@
   transition: transform 120ms ease-out;
   mix-blend-mode: luminosity;
   filter: contrast(1.1) brightness(1.1);
+  opacity: 1;
+  visibility: visible;
+}
+
+@supports not (mix-blend-mode: luminosity) {
+  .pc-avatar-content .avatar {
+    filter: contrast(1.05) brightness(1.05) grayscale(0.2);
+  }
 }
 
 .pc-avatar-content::before {
