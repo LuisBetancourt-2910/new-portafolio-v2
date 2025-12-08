@@ -1,0 +1,15 @@
+# Browsers that we support
+
+> 0.5%
+last 2 versions
+Firefox ESR
+not dead
+not IE 11
+not op_mini all
+
+# Navegadores específicos si necesitas más compatibilidad:
+# iOS >= 12
+# Safari >= 12
+# Chrome >= 90
+# Firefox >= 88
+# Edge >= 90

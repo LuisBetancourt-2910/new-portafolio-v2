@@ -31,7 +31,9 @@
 }
 
 .pc-card-wrapper {
+  -webkit-perspective: 500px;
   perspective: 500px;
+  -webkit-transform: translate3d(0, 0, 0.1px);
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: pan-y;
@@ -72,13 +74,14 @@
   transition: transform 1s ease;
   transform: translateZ(0) rotateX(0deg) rotateY(0deg);
   background: rgba(0, 0, 0, 0.9);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   overflow: hidden;
 }
 
 @media (min-width: 1024px) {
   .pc-card {
-    height: 80svh;
+    height: 80vh;
     width: auto;
     max-height: 540px;
   }
@@ -115,10 +118,15 @@
 }
 
 .pc-shine {
+  -webkit-mask-image: var(--icon);
   mask-image: var(--icon);
+  -webkit-mask-mode: luminance;
   mask-mode: luminance;
+  -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
+  -webkit-mask-size: 150%;
   mask-size: 150%;
+  -webkit-mask-position: top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x));
   mask-position: top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x));
   transition: filter 0.8s ease;
   filter: brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5);
@@ -131,6 +139,7 @@
 .pc-shine::after {
   --space: 5%;
   --angle: -45deg;
+  -webkit-transform: translate3d(0, 0, 1px);
   transform: translate3d(0, 0, 1px);
   overflow: hidden;
   z-index: 3;
@@ -236,6 +245,7 @@
 }
 
 .pc-glare {
+  -webkit-transform: translate3d(0, 0, 1.1px);
   transform: translate3d(0, 0, 1.1px);
   overflow: hidden;
   background-image: 
@@ -263,7 +273,9 @@
 .pc-avatar-content {
   mix-blend-mode: luminosity;
   overflow: visible;
+  -webkit-transform: translateZ(2);
   transform: translateZ(2);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 6;
   position: relative;
@@ -273,10 +285,14 @@
   width: 100%;
   position: absolute;
   left: 50%;
+  -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
+  -webkit-transform: translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)) translateZ(0)
+    scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02)) scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01));
   transform: translateX(calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)) translateZ(0)
     scaleY(calc(1 + (var(--pointer-from-top) - 0.5) * 0.02)) scaleX(calc(1 + (var(--pointer-from-left) - 0.5) * 0.01));
   bottom: -1px;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform;
   transition: transform 120ms ease-out;
@@ -289,6 +305,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  -webkit-backdrop-filter: none;
   backdrop-filter: none;
   pointer-events: none;
 }
@@ -305,6 +322,7 @@
   align-items: center;
   justify-content: space-between;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: calc(max(0px, var(--card-radius) - var(--ui-inset) + var(--ui-radius-bias)));
@@ -363,6 +381,7 @@
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   transition: all 0.2s ease;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -377,6 +396,11 @@
   overflow: hidden;
   text-align: center;
   position: relative;
+  -webkit-transform: translate3d(
+    calc(var(--pointer-from-left) * -6px + 3px),
+    calc(var(--pointer-from-top) * -6px + 3px),
+    0.1px
+  );
   transform: translate3d(
     calc(var(--pointer-from-left) * -6px + 3px),
     calc(var(--pointer-from-top) * -6px + 3px),
@@ -397,13 +421,13 @@
 .pc-details h3 {
   font-weight: 600;
   margin: 0;
-  font-size: min(5svh, 3em);
+  font-size: min(5vh, 3em);
   margin: 0;
   background-image: linear-gradient(to bottom, #fff, #6f6fbe);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .pc-details p {
@@ -417,8 +441,8 @@
   background-image: linear-gradient(to bottom, #fff, #4a4ac0);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
 }
 
 @keyframes glow-bg {
@@ -460,7 +484,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(4svh, 2.5em);
+    font-size: min(4vh, 2.5em);
   }
 
   .pc-details p {
@@ -508,7 +532,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(3.5svh, 2em);
+    font-size: min(3.5vh, 2em);
   }
 
   .pc-details p {
@@ -554,7 +578,7 @@
   }
 
   .pc-details h3 {
-    font-size: min(3svh, 1.5em);
+    font-size: min(3vh, 1.5em);
   }
 
   .pc-details p {
