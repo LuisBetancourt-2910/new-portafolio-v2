@@ -286,7 +286,7 @@ export default function Dashboard() {
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
               {t('skills.title')}
             </h3>
-            <div className="w-full max-w-[550px] flex justify-center">
+            <div className="w-full max-w-[520px] md:max-w-[650px] flex justify-center">
               <IconCloud
               images={[
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",

@@ -160,9 +160,9 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
       const z = Math.sin(phi) * r
 
       return {
-        x: x * 135,
-        y: y * 135,
-        z: z * 135,
+        x: x * 160,
+        y: y * 160,
+        z: z * 160,
         scale: 1,
         opacity: 1,
         id: i,
@@ -309,8 +309,8 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
         const rotatedZ = icon.x * sinY + icon.z * cosY
         const rotatedY = icon.y * cosX + rotatedZ * sinX
 
-        const scale = (rotatedZ + 250) / 400
-        const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 200) / 250))
+        const scale = (rotatedZ + 280) / 450
+        const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 230) / 280))
 
         ctx.save()
         ctx.translate(canvas.width / 2 + rotatedX, canvas.height / 2 + rotatedY)
@@ -384,13 +384,13 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
       )}
       <canvas
         ref={canvasRef}
-        width={550}
-        height={550}
+        width={650}
+        height={650}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className={`rounded-lg transition-opacity duration-300 max-w-full h-auto ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`rounded-lg transition-opacity duration-300 w-full max-w-[520px] md:max-w-[650px] h-auto ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
         aria-label="Interactive 3D Icon Cloud - Tech Stack Visualization"
         role="img"
         style={{ willChange: 'transform' }}
