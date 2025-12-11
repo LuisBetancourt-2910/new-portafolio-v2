@@ -282,11 +282,12 @@ export default function Dashboard() {
           </div>
 
           {/* Bottom Section: Tech Stack */}
-          <div id="techstack" className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto">
+          <div id="techstack" className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto px-4">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
               {t('skills.title')}
             </h3>
-            <IconCloud
+            <div className="w-full max-w-[550px] flex justify-center">
+              <IconCloud
               images={[
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
@@ -314,6 +315,7 @@ export default function Dashboard() {
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg",
               ]}
             />
+            </div>
           </div>
 
           {/* CV Section */}

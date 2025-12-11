@@ -160,9 +160,9 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
       const z = Math.sin(phi) * r
 
       return {
-        x: x * 100,
-        y: y * 100,
-        z: z * 100,
+        x: x * 135,
+        y: y * 135,
+        z: z * 135,
         scale: 1,
         opacity: 1,
         id: i,
@@ -309,8 +309,8 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
         const rotatedZ = icon.x * sinY + icon.z * cosY
         const rotatedY = icon.y * cosX + rotatedZ * sinX
 
-        const scale = (rotatedZ + 200) / 300
-        const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 150) / 200))
+        const scale = (rotatedZ + 250) / 400
+        const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 200) / 250))
 
         ctx.save()
         ctx.translate(canvas.width / 2 + rotatedX, canvas.height / 2 + rotatedY)
@@ -323,6 +323,29 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
             iconCanvasesRef.current[index] &&
             imagesLoadedRef.current[index]
           ) {
+            // Only show outline in dark mode
+            const isDarkMode = document.documentElement.classList.contains('dark')
+            
+            if (isDarkMode) {
+              // Draw outline by rendering icon with offsets
+              ctx.globalCompositeOperation = 'source-over'
+              const outlineWidth = 2
+              for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+                const offsetX = Math.cos(angle) * outlineWidth
+                const offsetY = Math.sin(angle) * outlineWidth
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.8)'
+                ctx.shadowBlur = 1
+                ctx.shadowOffsetX = offsetX
+                ctx.shadowOffsetY = offsetY
+                ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
+              }
+            }
+            
+            // Draw the main icon on top
+            ctx.shadowColor = 'transparent'
+            ctx.shadowBlur = 0
+            ctx.shadowOffsetX = 0
+            ctx.shadowOffsetY = 0
             ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
           }
         } else {
@@ -361,13 +384,13 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
       )}
       <canvas
         ref={canvasRef}
-        width={400}
-        height={400}
+        width={550}
+        height={550}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className={`rounded-lg transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`rounded-lg transition-opacity duration-300 max-w-full h-auto ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
         aria-label="Interactive 3D Icon Cloud - Tech Stack Visualization"
         role="img"
         style={{ willChange: 'transform' }}
