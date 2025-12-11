@@ -15,7 +15,6 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error('Error serving CV:', error);
     return new NextResponse('CV not found', { status: 404 });
   }
 }

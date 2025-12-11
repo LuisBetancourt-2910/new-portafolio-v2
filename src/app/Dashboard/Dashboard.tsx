@@ -315,11 +315,9 @@ export default function Dashboard() {
               ]}
             />
           </div>
-        </div>
-      </div>
 
-        {/* CV Section */}
-          <div id="cv" className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
+          {/* CV Section */}
+          <div id="cv" className="flex flex-col items-center gap-8 pt-32 pb-16 pointer-events-auto">
             <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
               Curriculum Vitae
             </h3>
@@ -358,6 +356,8 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
       {/* Mobile Menu Button */}
       <motion.button
@@ -405,7 +405,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <User className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <User className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -427,7 +427,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Briefcase className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <Briefcase className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -449,7 +449,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Code className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <Code className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -471,7 +471,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Mail className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <Mail className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -500,7 +500,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Github className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <Github className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -522,7 +522,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Linkedin className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <Linkedin className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -544,7 +544,7 @@ export default function Dashboard() {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <FileText className="w-5 h-5 text-slate-900 dark:text-white" />
+                      <FileText className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-lg" />
                     </motion.button>
                   </TooltipTrigger>
                   <TooltipContent side="right">
@@ -568,7 +568,7 @@ export default function Dashboard() {
                   onClick={() => scrollToSection('about')}
                   className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
                 >
-                  <User className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <User className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -582,7 +582,7 @@ export default function Dashboard() {
                   onClick={() => scrollToSection('projects')}
                   className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
                 >
-                  <Briefcase className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <Briefcase className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -596,7 +596,7 @@ export default function Dashboard() {
                   onClick={() => scrollToSection('techstack')}
                   className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
                 >
-                  <Code className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <Code className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -613,7 +613,7 @@ export default function Dashboard() {
                       "mailto:joseluisgarciabeta@gmail.com")
                   }
                 >
-                  <Mail className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <Mail className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -634,7 +634,7 @@ export default function Dashboard() {
                     )
                   }
                 >
-                  <Github className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <Github className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -653,7 +653,7 @@ export default function Dashboard() {
                     )
                   }
                 >
-                  <Linkedin className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <Linkedin className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>
@@ -667,7 +667,7 @@ export default function Dashboard() {
                   onClick={() => scrollToSection('cv')}
                   className="bg-white/10 dark:bg-black/20 backdrop-blur-md border border-slate-900/10 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/40 hover:border-slate-900/30 dark:hover:border-white/30 transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/10"
                 >
-                  <FileText className="w-5 h-5 text-slate-900 dark:text-white transition-transform duration-300 hover:scale-110" />
+                  <FileText className="w-5 h-5 text-slate-900 dark:text-white drop-shadow-md transition-transform duration-300 hover:scale-110" />
                 </DockIcon>
               </TooltipTrigger>
               <TooltipContent>

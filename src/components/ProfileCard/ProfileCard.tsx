@@ -279,7 +279,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               window.addEventListener('deviceorientation', deviceOrientationHandler);
             }
           })
-          .catch(console.error);
+          .catch(() => {
+            // Permission denied or error - silently fail
+          });
       } else {
         window.addEventListener('deviceorientation', deviceOrientationHandler);
       }
@@ -346,12 +348,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 decoding="async"
                 onError={(e) => {
                   const t = e.target as HTMLImageElement;
-                  console.error('Error loading avatar:', avatarUrl);
                   t.style.display = 'none';
-                }}
-                onLoad={(e) => {
-                  const t = e.target as HTMLImageElement;
-                  console.log('Avatar loaded successfully:', avatarUrl);
                 }}
               />
               {showUserInfo && (
@@ -365,7 +362,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                         decoding="async"
                         onError={(e) => {
                           const t = e.target as HTMLImageElement;
-                          console.warn('Error loading mini avatar, using fallback');
                           if (t.src !== avatarUrl) {
                             t.src = avatarUrl;
                           }

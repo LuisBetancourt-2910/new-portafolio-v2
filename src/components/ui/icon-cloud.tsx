@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useMemo } from "react"
 import { renderToString } from "react-dom/server"
 
 interface Icon {
@@ -21,13 +21,15 @@ function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3)
 }
 
-export function IconCloud({ icons, images }: IconCloudProps) {
+// Memoized component wrapper for better performance
+const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [iconPositions, setIconPositions] = useState<Icon[]>([])
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isLoaded, setIsLoaded] = useState(false)
   const [targetRotation, setTargetRotation] = useState<{
     x: number
     y: number
@@ -41,27 +43,35 @@ export function IconCloud({ icons, images }: IconCloudProps) {
   const rotationRef = useRef(rotation)
   const iconCanvasesRef = useRef<HTMLCanvasElement[]>([])
   const imagesLoadedRef = useRef<boolean[]>([])
+  const loadedCountRef = useRef(0)
 
-  // Create icon canvases once when icons/images change
+  // Memoize items to prevent unnecessary recalculations
+  const items = useMemo(() => icons || images || [], [icons, images])
+  const itemCount = useMemo(() => items.length, [items])
+
+  // Lazy load images with better error handling
   useEffect(() => {
-    if (!icons && !images) return
+    if (!items.length) return
 
-    const items = icons || images || []
-    imagesLoadedRef.current = new Array(items.length).fill(false)
+    let mounted = true
+    imagesLoadedRef.current = new Array(itemCount).fill(false)
+    loadedCountRef.current = 0
 
     const newIconCanvases = items.map((item, index) => {
       const offscreen = document.createElement("canvas")
       offscreen.width = 40
       offscreen.height = 40
-      const offCtx = offscreen.getContext("2d")
+      const offCtx = offscreen.getContext("2d", { alpha: true })
 
       if (offCtx) {
         if (images) {
-          // Handle image URLs directly
+          // Handle image URLs
           const img = new Image()
           img.crossOrigin = "anonymous"
           img.src = items[index] as string
+          
           img.onload = () => {
+            if (!mounted) return
             offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
 
             // Create circular clipping path
@@ -74,17 +84,52 @@ export function IconCloud({ icons, images }: IconCloudProps) {
             offCtx.drawImage(img, 0, 0, 40, 40)
 
             imagesLoadedRef.current[index] = true
+            loadedCountRef.current++
+            
+            if (loadedCountRef.current >= itemCount) {
+              setIsLoaded(true)
+            }
+          }
+          
+          img.onerror = () => {
+            if (!mounted) return
+            imagesLoadedRef.current[index] = false
+            loadedCountRef.current++
+            if (loadedCountRef.current >= itemCount) {
+              setIsLoaded(true)
+            }
           }
         } else {
           // Handle SVG icons
-          offCtx.scale(0.4, 0.4)
-          const svgString = renderToString(item as React.ReactElement)
-          const img = new Image()
-          img.src = "data:image/svg+xml;base64," + btoa(svgString)
-          img.onload = () => {
-            offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
-            offCtx.drawImage(img, 0, 0)
-            imagesLoadedRef.current[index] = true
+          try {
+            offCtx.scale(0.4, 0.4)
+            const svgString = renderToString(item as React.ReactElement)
+            const img = new Image()
+            img.src = "data:image/svg+xml;base64," + btoa(svgString)
+            img.onload = () => {
+              if (!mounted) return
+              offCtx.clearRect(0, 0, offscreen.width, offscreen.height)
+              offCtx.drawImage(img, 0, 0)
+              imagesLoadedRef.current[index] = true
+              loadedCountRef.current++
+              if (loadedCountRef.current >= itemCount) {
+                setIsLoaded(true)
+              }
+            }
+            img.onerror = () => {
+              if (!mounted) return
+              imagesLoadedRef.current[index] = false
+              loadedCountRef.current++
+              if (loadedCountRef.current >= itemCount) {
+                setIsLoaded(true)
+              }
+            }
+          } catch (err) {
+            imagesLoadedRef.current[index] = false
+            loadedCountRef.current++
+            if (loadedCountRef.current >= itemCount) {
+              setIsLoaded(true)
+            }
           }
         }
       }
@@ -92,19 +137,21 @@ export function IconCloud({ icons, images }: IconCloudProps) {
     })
 
     iconCanvasesRef.current = newIconCanvases
-  }, [icons, images])
+    
+    return () => {
+      mounted = false
+    }
+  }, [items, itemCount, images])
 
-  // Generate initial icon positions on a sphere
+  // Generate initial icon positions on a sphere (memoized)
   useEffect(() => {
-    const items = icons || images || []
-    const newIcons: Icon[] = []
-    const numIcons = items.length || 20
+    const numIcons = itemCount || 20
 
     // Fibonacci sphere parameters
     const offset = 2 / numIcons
     const increment = Math.PI * (3 - Math.sqrt(5))
 
-    for (let i = 0; i < numIcons; i++) {
+    const newIcons: Icon[] = Array.from({ length: numIcons }, (_, i) => {
       const y = i * offset - 1 + offset / 2
       const r = Math.sqrt(1 - y * y)
       const phi = i * increment
@@ -112,17 +159,18 @@ export function IconCloud({ icons, images }: IconCloudProps) {
       const x = Math.cos(phi) * r
       const z = Math.sin(phi) * r
 
-      newIcons.push({
+      return {
         x: x * 100,
         y: y * 100,
         z: z * 100,
         scale: 1,
         opacity: 1,
         id: i,
-      })
-    }
+      }
+    })
+    
     setIconPositions(newIcons)
-  }, [icons, images])
+  }, [itemCount])
 
   // Handle mouse events
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -305,17 +353,28 @@ export function IconCloud({ icons, images }: IconCloudProps) {
   }, [icons, images, iconPositions, isDragging, mousePos, targetRotation])
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={400}
-      height={400}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      className="rounded-lg"
-      aria-label="Interactive 3D Icon Cloud"
-      role="img"
-    />
+    <div className="relative">
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-slate-300 dark:border-slate-700 border-t-slate-900 dark:border-t-white rounded-full animate-spin" />
+        </div>
+      )}
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={400}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        className={`rounded-lg transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+        aria-label="Interactive 3D Icon Cloud - Tech Stack Visualization"
+        role="img"
+        style={{ willChange: 'transform' }}
+      />
+    </div>
   )
 }
+
+// Export memoized version
+export const IconCloud = React.memo(IconCloudComponent)
