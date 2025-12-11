@@ -1,11 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export function LanguageToggler() {
     const [locale, setLocale] = useState<"es" | "en">("es");
     const [mounted, setMounted] = useState(false);
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
 
     useEffect(() => {
         setMounted(true);
@@ -22,25 +25,17 @@ export function LanguageToggler() {
 
     const toggleLanguage = () => {
         const newLocale = locale === "es" ? "en" : "es";
-        
-        // Save current theme state IMMEDIATELY before any changes
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        const themeToSave = isDarkMode ? 'dark' : 'light';
-        
-        // Force save theme to localStorage
-        localStorage.setItem('theme', themeToSave);
-        
-        // Also save as data attribute for immediate restoration
-        document.documentElement.setAttribute('data-theme-backup', themeToSave);
 
         // Set locale cookie
         document.cookie = `locale=${newLocale}; path=/; max-age=31536000`; // 1 year
 
-        // Update state
+        // Update state immediately for visual feedback
         setLocale(newLocale);
 
-        // Reload page to apply new locale
-        window.location.reload();
+        // Use Next.js router to refresh without full page reload
+        startTransition(() => {
+            router.refresh();
+        });
     };
 
     if (!mounted) {
@@ -57,7 +52,8 @@ export function LanguageToggler() {
     return (
         <button
             onClick={toggleLanguage}
-            className="group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all hover:scale-105"
+            disabled={isPending}
+            className="group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-wait"
             aria-label={`Switch to ${locale === "es" ? "English" : "Español"}`}
         >
             <motion.div
