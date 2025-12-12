@@ -42,6 +42,7 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
   const animationFrameRef = useRef<number>(0)
   const rotationRef = useRef(rotation)
   const iconCanvasesRef = useRef<HTMLCanvasElement[]>([])
+  const iconWithOutlineRef = useRef<HTMLCanvasElement[]>([])
   const imagesLoadedRef = useRef<boolean[]>([])
   const loadedCountRef = useRef(0)
 
@@ -85,6 +86,32 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
 
             imagesLoadedRef.current[index] = true
             loadedCountRef.current++
+            
+            // Pre-render icon with outline for dark mode performance
+            const outlineCanvas = document.createElement("canvas")
+            outlineCanvas.width = 44
+            outlineCanvas.height = 44
+            const outlineCtx = outlineCanvas.getContext("2d", { alpha: true })
+            if (outlineCtx) {
+              // Draw outline with 4 points (reduced from 8 for better performance)
+              const outlineWidth = 2
+              for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 2) {
+                const offsetX = Math.cos(angle) * outlineWidth
+                const offsetY = Math.sin(angle) * outlineWidth
+                outlineCtx.shadowColor = 'rgba(255, 255, 255, 0.8)'
+                outlineCtx.shadowBlur = 2
+                outlineCtx.shadowOffsetX = offsetX
+                outlineCtx.shadowOffsetY = offsetY
+                outlineCtx.drawImage(offscreen, 2, 2, 40, 40)
+              }
+              // Draw clean icon on top
+              outlineCtx.shadowColor = 'transparent'
+              outlineCtx.shadowBlur = 0
+              outlineCtx.shadowOffsetX = 0
+              outlineCtx.shadowOffsetY = 0
+              outlineCtx.drawImage(offscreen, 2, 2, 40, 40)
+              iconWithOutlineRef.current[index] = outlineCanvas
+            }
             
             if (loadedCountRef.current >= itemCount) {
               setIsLoaded(true)
@@ -323,30 +350,16 @@ const IconCloudComponent = ({ icons, images }: IconCloudProps) => {
             iconCanvasesRef.current[index] &&
             imagesLoadedRef.current[index]
           ) {
-            // Only show outline in dark mode
+            // Use pre-rendered outline in dark mode for better performance
             const isDarkMode = document.documentElement.classList.contains('dark')
             
-            if (isDarkMode) {
-              // Draw outline by rendering icon with offsets
-              ctx.globalCompositeOperation = 'source-over'
-              const outlineWidth = 2
-              for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
-                const offsetX = Math.cos(angle) * outlineWidth
-                const offsetY = Math.sin(angle) * outlineWidth
-                ctx.shadowColor = 'rgba(255, 255, 255, 0.8)'
-                ctx.shadowBlur = 1
-                ctx.shadowOffsetX = offsetX
-                ctx.shadowOffsetY = offsetY
-                ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
-              }
+            if (isDarkMode && iconWithOutlineRef.current[index]) {
+              // Draw pre-rendered icon with outline (1 operation instead of 9)
+              ctx.drawImage(iconWithOutlineRef.current[index], -22, -22, 44, 44)
+            } else {
+              // Light mode: just draw the icon
+              ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
             }
-            
-            // Draw the main icon on top
-            ctx.shadowColor = 'transparent'
-            ctx.shadowBlur = 0
-            ctx.shadowOffsetX = 0
-            ctx.shadowOffsetY = 0
-            ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40)
           }
         } else {
           // Show numbered circles if no icons/images are provided
