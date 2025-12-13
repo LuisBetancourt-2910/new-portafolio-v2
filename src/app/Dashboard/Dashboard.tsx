@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTranslations } from 'next-intl';
 import Particles from "@/components/Backgrounds/Particles";
 import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
@@ -23,6 +23,23 @@ export default function Dashboard() {
   const t = useTranslations();
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Refs para scroll animations
+  const aboutRef = useRef(null);
+  const projectsRef = useRef(null);
+  const techStackRef = useRef(null);
+  const cvRef = useRef(null);
+
+  // InView hooks
+  const aboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
+  const projectsInView = useInView(projectsRef, { once: true, amount: 0.1 });
+  const techStackInView = useInView(techStackRef, { once: true, amount: 0.3 });
+  const cvInView = useInView(cvRef, { once: true, amount: 0.3 });
+
+  useEffect(() => {
+    // Scroll to top on component mount
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     // Verificar el tema inicial
@@ -99,7 +116,14 @@ export default function Dashboard() {
       <div className="relative z-20 flex items-center justify-center min-h-screen px-4 py-8 pt-32 pointer-events-none">
         <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 pointer-events-none">
           {/* Top Section: About Me (Left) and Profile Card (Right) */}
-          <div id="about" className="w-full">
+          <motion.div
+            id="about"
+            ref={aboutRef}
+            className="w-full"
+            initial={{ opacity: 0, y: 50 }}
+            animate={aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-8 lg:gap-12">
               {/* About Me - Left on Desktop, Bottom on Mobile */}
               <div className="flex items-center justify-center lg:justify-end pointer-events-auto w-full lg:flex-1">
@@ -137,14 +161,32 @@ export default function Dashboard() {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Projects Section */}
-          <div id="projects" className="flex flex-col items-center gap-8 pt-32 pointer-events-auto">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+          <motion.div
+            id="projects"
+            ref={projectsRef}
+            className="flex flex-col items-center gap-8 pt-32 pointer-events-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={projectsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.h3
+              className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={projectsInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               {t('projects.title')}
-            </h3>
-            <BentoGrid className="w-full">
+            </motion.h3>
+            <motion.div
+              className="w-full"
+              initial={{ opacity: 0 }}
+              animate={projectsInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <BentoGrid className="w-full">
               <BentoCard
                 name={t('projects.erp.title')}
                 className="col-span-3 lg:col-span-2"
@@ -278,15 +320,33 @@ export default function Dashboard() {
                 cta={t('projects.viewProject')}
                 hasImage={true}
               />
-            </BentoGrid>
-          </div>
+              </BentoGrid>
+            </motion.div>
+          </motion.div>
 
           {/* Bottom Section: Tech Stack */}
-          <div id="techstack" className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto px-4">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+          <motion.div
+            id="techstack"
+            ref={techStackRef}
+            className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto px-4"
+            initial={{ opacity: 0, y: 50 }}
+            animate={techStackInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.h3
+              className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={techStackInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               {t('skills.title')}
-            </h3>
-            <div className="w-full max-w-[520px] md:max-w-[650px] flex justify-center">
+            </motion.h3>
+            <motion.div
+              className="w-full max-w-[520px] md:max-w-[650px] flex justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={techStackInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
               <IconCloud
               images={[
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
@@ -315,15 +375,32 @@ export default function Dashboard() {
                 "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg",
               ]}
             />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* CV Section */}
-          <div id="cv" className="flex flex-col items-center gap-8 pt-32 pb-16 pointer-events-auto">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+          <motion.div
+            id="cv"
+            ref={cvRef}
+            className="flex flex-col items-center gap-8 pt-32 pb-16 pointer-events-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={cvInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.h3
+              className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={cvInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               Curriculum Vitae
-            </h3>
-            <div className="w-full max-w-4xl">
+            </motion.h3>
+            <motion.div
+              className="w-full max-w-4xl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={cvInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               <div className="relative group overflow-hidden rounded-3xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl">
                 {/* CV Image Preview Background */}
                 <div className="relative w-full h-[600px] overflow-hidden">
@@ -356,8 +433,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
 
