@@ -32,29 +32,64 @@ export default async function Image() {
             height: '100%',
             backgroundColor: '#1e293b',
             overflow: 'hidden',
+            position: 'relative',
           }}
         >
+          {/* Código decorativo en el fondo */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              right: '0',
+              bottom: '0',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '60px 40px',
+              fontFamily: 'monospace',
+              fontSize: '14px',
+              color: '#334155',
+              opacity: 0.4,
+              lineHeight: '1.8',
+            }}
+          >
+            <div style={{ display: 'flex' }}>const developer = &#123;</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>name: "José Luis García Betancourt",</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>role: "Full Stack Developer",</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>experience: "2+ años",</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>technologies: ["React", "Node.js", "TypeScript"],</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>projects: 7,</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>passion: "Creating scalable solutions"</div>
+            <div style={{ display: 'flex' }}>&#125;;</div>
+            <div style={{ display: 'flex', marginTop: '20px' }}></div>
+            <div style={{ display: 'flex' }}>function buildAmazingThings() &#123;</div>
+            <div style={{ display: 'flex', paddingLeft: '20px' }}>return dedication + creativity;</div>
+            <div style={{ display: 'flex' }}>&#125;</div>
+          </div>
+
           {/* Console Header */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              backgroundColor: '#000000',
-              padding: '16px 24px',
-              borderBottom: '2px solid #333',
+              backgroundColor: '#0f172a',
+              padding: '20px 32px',
+              borderBottom: '2px solid #334155',
+              position: 'relative',
+              zIndex: 10,
             }}
           >
-            <div style={{ display: 'flex', gap: '8px', marginRight: '16px' }}>
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', backgroundColor: '#ff5f56' }} />
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', backgroundColor: '#ffbd2e' }} />
-              <div style={{ width: '14px', height: '14px', borderRadius: '50%', backgroundColor: '#27c93f' }} />
+            <div style={{ display: 'flex', gap: '10px', marginRight: '20px' }}>
+              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
+              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+              <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#10b981' }} />
             </div>
             <div
               style={{
                 display: 'flex',
                 color: '#10b981',
                 fontFamily: 'monospace',
-                fontSize: '18px',
+                fontSize: '20px',
                 fontWeight: 'bold',
               }}
             >
@@ -71,17 +106,48 @@ export default async function Image() {
               justifyContent: 'center',
               flex: 1,
               padding: '40px',
+              position: 'relative',
+              zIndex: 10,
             }}
           >
+            {/* Icono LB */}
+            <div
+              style={{
+                display: 'flex',
+                width: '140px',
+                height: '140px',
+                backgroundColor: '#ffffff',
+                borderRadius: '50%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '32px',
+                boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)',
+                border: '4px solid #10b981',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: '72px',
+                  fontWeight: 'bold',
+                  color: '#000000',
+                  fontFamily: 'monospace',
+                }}
+              >
+                LB
+              </div>
+            </div>
+
             {/* Nombre Completo */}
             <div
               style={{
                 display: 'flex',
-                fontSize: '64px',
+                fontSize: '56px',
                 fontWeight: 'bold',
                 color: '#ffffff',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 letterSpacing: '-0.02em',
+                textAlign: 'center',
               }}
             >
               José Luis García Betancourt
@@ -91,9 +157,9 @@ export default async function Image() {
             <div
               style={{
                 display: 'flex',
-                fontSize: '32px',
+                fontSize: '28px',
                 color: '#cbd5e1',
-                marginBottom: '24px',
+                marginBottom: '32px',
                 fontWeight: '600',
               }}
             >
@@ -105,14 +171,18 @@ export default async function Image() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                fontSize: '28px',
+                fontSize: '24px',
                 color: '#10b981',
                 fontFamily: 'monospace',
+                backgroundColor: '#0f172a',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                border: '2px solid #334155',
               }}
             >
               <svg
-                width="28"
-                height="28"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 style={{ marginRight: '12px' }}
               >
@@ -134,6 +204,36 @@ export default async function Image() {
                 />
               </svg>
               betanworks.dev
+            </div>
+          </div>
+
+          {/* Footer con estadísticas */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              padding: '24px 40px',
+              backgroundColor: '#0f172a',
+              borderTop: '2px solid #334155',
+              position: 'relative',
+              zIndex: 10,
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold', color: '#3b82f6' }}>7+</div>
+              <div style={{ display: 'flex', fontSize: '14px', color: '#94a3b8' }}>Proyectos</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold', color: '#8b5cf6' }}>2+</div>
+              <div style={{ display: 'flex', fontSize: '14px', color: '#94a3b8' }}>Años</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold', color: '#10b981' }}>24+</div>
+              <div style={{ display: 'flex', fontSize: '14px', color: '#94a3b8' }}>Tecnologías</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ display: 'flex', fontSize: '28px', fontWeight: 'bold', color: '#f59e0b' }}>10+</div>
+              <div style={{ display: 'flex', fontSize: '14px', color: '#94a3b8' }}>Soluciones</div>
             </div>
           </div>
         </div>
