@@ -28,13 +28,10 @@ export default async function Image() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '1000px',
-            height: '500px',
+            width: '100%',
+            height: '100%',
             backgroundColor: '#1e293b',
-            borderRadius: '12px',
-            border: '3px solid #334155',
             overflow: 'hidden',
-            boxShadow: '0 25px 50px rgba(0,0,0,0.5)',
           }}
         >
           {/* Console Header */}
