@@ -21,6 +21,13 @@
   "skills": {
     "title": "Tech Stack"
   },
+  "metrics": {
+    "title": "My Metrics",
+    "projects": "Projects Worked On",
+    "experience": "Years of Experience",
+    "technologies": "Technologies Used",
+    "clients": "Solutions Implemented"
+  },
   "projects": {
     "title": "Featured Projects",
     "viewProject": "View Project",

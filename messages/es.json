@@ -21,6 +21,13 @@
   "skills": {
     "title": "Tech Stack"
   },
+  "metrics": {
+    "title": "Mis Métricas",
+    "projects": "Proyectos Trabajados",
+    "experience": "Años de Experiencia",
+    "technologies": "Tecnologías Utilizadas",
+    "clients": "Soluciones Implementadas"
+  },
   "projects": {
     "title": "Proyectos Destacados",
     "viewProject": "Ver Proyecto",
