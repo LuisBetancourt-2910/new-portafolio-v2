@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { AnimatedTitle } from '@/components/AnimatedTitle';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,8 +26,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://betanworks.dev'),
   title: {
-    default: "Luis Betancourt — Full Stack Developer | Portafolio",
-    template: "%s — Luis Betancourt",
+    default: "José Luis García Betancourt — Full Stack Developer | Portafolio",
+    template: "%s — José Luis García Betancourt",
   },
   description: "Portafolio profesional de Luis Betancourt (José Luis García Betancourt), Full Stack Developer e Ingeniero en Sistemas Computacionales. Especializado en JavaScript, TypeScript, React, Angular, Node.js, PHP, Laravel, .NET, C#, AWS, SQL Server y MySQL. Desarrollo de aplicaciones web empresariales, sistemas ERP, plataformas de gestión y soluciones cloud.",
   keywords: [
@@ -54,9 +55,9 @@ export const metadata: Metadata = {
     'Durango',
     'México',
   ],
-  authors: [{ name: 'Luis Betancourt', url: 'https://betanworks.dev' }],
-  creator: 'Luis Betancourt',
-  publisher: 'Luis Betancourt',
+  authors: [{ name: 'José Luis García Betancourt', url: 'https://betanworks.dev' }],
+  creator: 'José Luis García Betancourt',
+  publisher: 'José Luis García Betancourt',
   robots: {
     index: true,
     follow: true,
@@ -74,26 +75,17 @@ export const metadata: Metadata = {
     apple: "/icon.svg?v=2",
   },
   openGraph: {
-    title: "Luis Betancourt — Full Stack Developer",
+    title: "José Luis García Betancourt — Full Stack Developer",
     description: "Full Stack Developer especializado en JavaScript, TypeScript, React, Angular, Node.js, PHP, Laravel, .NET y AWS. Portafolio de proyectos y CV.",
     url: "https://betanworks.dev",
-    siteName: "Luis Betancourt — Portafolio",
+    siteName: "José Luis García Betancourt — Portafolio",
     locale: "es_MX",
     type: "website",
-    images: [
-      {
-        url: '/avatar.png',
-        width: 1200,
-        height: 630,
-        alt: 'Luis Betancourt - Full Stack Developer',
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luis Betancourt — Full Stack Developer",
+    title: "José Luis García Betancourt — Full Stack Developer",
     description: "Full Stack Developer especializado en JavaScript, TypeScript, React, Angular, Node.js, PHP, Laravel, .NET y AWS.",
-    images: ['/avatar.png'],
   },
   alternates: {
     canonical: 'https://betanworks.dev',
@@ -136,6 +128,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <AnimatedTitle />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
