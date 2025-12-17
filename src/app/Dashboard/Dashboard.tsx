@@ -306,7 +306,7 @@ export default function Dashboard() {
               />
               <BentoCard
                 name={t('projects.multas.title')}
-                className="col-span-3 lg:col-span-2"
+                className="col-span-3 lg:col-span-1"
                 background={
                   <>
                     <img 
@@ -321,6 +321,42 @@ export default function Dashboard() {
                 description={t('projects.multas.description')}
                 href="#"
                 cta={t('projects.viewProject')}
+                hasImage={true}
+              />
+              <BentoCard
+                name={t('projects.yourProject.title')}
+                className="col-span-3 lg:col-span-2"
+                background={
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900" />
+                    <div className="absolute inset-0 opacity-20">
+                      <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <circle cx="20" cy="20" r="1.5" fill="white" />
+                          </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                      </svg>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                    <div className="absolute inset-0 flex items-start lg:items-center justify-center pt-8 lg:pt-0 p-4">
+                      <div className="text-center space-y-2 lg:space-y-4 px-4 lg:px-6 max-w-full">
+                        <div className="text-4xl lg:text-6xl mb-2 lg:mb-4">💼</div>
+                        <div className="text-base lg:text-lg font-semibold text-white drop-shadow-lg leading-snug lg:leading-relaxed">
+                          {t('projects.yourProject.reserved')}
+                        </div>
+                        <div className="text-sm lg:text-base text-white/90 drop-shadow-md leading-snug">
+                          {t('projects.yourProject.subtitle')}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                }
+                Icon={Rocket}
+                description={t('projects.yourProject.description')}
+                href="mailto:joseluisgarciabeta@gmail.com"
+                cta={t('projects.yourProject.cta')}
                 hasImage={true}
               />
               </BentoGrid>

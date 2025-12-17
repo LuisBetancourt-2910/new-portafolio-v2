@@ -44,7 +44,8 @@ export function LanguageToggler() {
                 className="relative inline-flex h-12 w-12 items-center justify-center rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20"
                 aria-label="Toggle language"
             >
-                <span className="text-sm font-bold text-slate-900 dark:text-white">ES</span>
+                <div className="absolute text-4xl opacity-10 text-slate-900 dark:text-white">文</div>
+                <span className="relative z-10 text-sm font-bold text-slate-900 dark:text-white">ES</span>
             </button>
         );
     }
@@ -56,6 +57,12 @@ export function LanguageToggler() {
             className="group relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-wait"
             aria-label={`Switch to ${locale === "es" ? "English" : "Español"}`}
         >
+            {/* Kanji/Symbol background - always visible */}
+            <div className="absolute text-4xl font-bold text-slate-900 dark:text-white opacity-10">
+                文
+            </div>
+
+            {/* ES text */}
             <motion.div
                 initial={false}
                 animate={{
@@ -67,13 +74,14 @@ export function LanguageToggler() {
                     duration: 0.3,
                     ease: "easeInOut",
                 }}
-                className="absolute"
+                className="absolute z-10"
             >
                 <span className="text-sm font-bold text-slate-900 dark:text-white">
                     ES
                 </span>
             </motion.div>
 
+            {/* EN text */}
             <motion.div
                 initial={false}
                 animate={{
@@ -85,7 +93,7 @@ export function LanguageToggler() {
                     duration: 0.3,
                     ease: "easeInOut",
                 }}
-                className="absolute"
+                className="absolute z-10"
             >
                 <span className="text-sm font-bold text-slate-900 dark:text-white">
                     EN

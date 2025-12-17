@@ -58,6 +58,13 @@
     "multas": {
       "title": "Multipayment Center",
       "description": "Comprehensive traffic fines management system with 4-step wizard, digital signatures, QR PDFs and automatic notifications. Laravel + React + AWS S3."
+    },
+    "yourProject": {
+      "title": "Your project here?",
+      "reserved": "This space is reserved",
+      "subtitle": "For the next project we build together.",
+      "description": "Have a project in mind? Let's work together to make it a reality.",
+      "cta": "Contact me"
     }
   },
   "contact": {

@@ -58,6 +58,13 @@
     "multas": {
       "title": "Centro Multipagos",
       "description": "Sistema integral de gestión de multas de tránsito con wizard de 4 pasos, firmas digitales, PDFs con QR y notificaciones automáticas. Laravel + React + AWS S3."
+    },
+    "yourProject": {
+      "title": "¿Tu proyecto aquí?",
+      "reserved": "Este espacio está reservado",
+      "subtitle": "Para el próximo proyecto que hagamos juntos.",
+      "description": "¿Tienes un proyecto en mente? Trabajemos juntos para hacerlo realidad.",
+      "cta": "Contáctame"
     }
   },
   "contact": {

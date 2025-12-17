@@ -110,31 +110,102 @@ export default async function Image() {
               zIndex: 10,
             }}
           >
-            {/* Icono LB */}
+            {/* Icono LB - Estilo Console */}
             <div
               style={{
                 display: 'flex',
-                width: '140px',
-                height: '140px',
+                width: '160px',
+                height: '160px',
                 backgroundColor: '#ffffff',
-                borderRadius: '50%',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: '32px',
                 boxShadow: '0 20px 60px rgba(16, 185, 129, 0.3)',
-                border: '4px solid #10b981',
+                border: '4px solid #000000',
+                borderRadius: '4px',
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
+              {/* Barra superior de consola */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  height: '24px',
+                  backgroundColor: '#000000',
+                  display: 'flex',
+                  alignItems: 'center',
+                  paddingLeft: '8px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    fontFamily: 'monospace',
+                    fontSize: '10px',
+                    fontWeight: 'bold',
+                    color: '#ffffff',
+                  }}
+                >
+                  &gt; console
+                </div>
+              </div>
+
+              {/* Contenedor de letras L y B – réplica SVG */}
               <div
                 style={{
                   display: 'flex',
-                  fontSize: '72px',
-                  fontWeight: 'bold',
-                  color: '#000000',
-                  fontFamily: 'monospace',
+                  position: 'relative',
+                  width: '120px',
+                  height: '100px',
+                  marginTop: '24px',
                 }}
               >
-                LB
+                {/* Letra L */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '20px',
+                    top: '14px',
+                    width: '8px',
+                    height: '72px',
+                    backgroundColor: '#000',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '20px',
+                    top: '78px',
+                    width: '32px',
+                    height: '8px',
+                    backgroundColor: '#000',
+                  }}
+                />
+
+                {/* Letra B */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '68px',
+                    top: '14px',
+                    width: '8px',
+                    height: '72px',
+                    backgroundColor: '#000',
+                  }}
+                />
+
+                {/* Líneas horizontales */}
+                <div style={{ position: 'absolute', left: '68px', top: '14px', width: '32px', height: '8px', backgroundColor: '#000' }} />
+                <div style={{ position: 'absolute', left: '68px', top: '46px', width: '32px', height: '8px', backgroundColor: '#000' }} />
+                <div style={{ position: 'absolute', left: '68px', top: '78px', width: '32px', height: '8px', backgroundColor: '#000' }} />
+
+                {/* Bloques derechos */}
+                <div style={{ position: 'absolute', left: '100px', top: '22px', width: '8px', height: '24px', backgroundColor: '#000' }} />
+                <div style={{ position: 'absolute', left: '100px', top: '54px', width: '8px', height: '24px', backgroundColor: '#000' }} />
               </div>
             </div>
 
