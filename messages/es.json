@@ -78,5 +78,10 @@
     "rights": "Todos los derechos reservados",
     "madeWith": "Hecho con",
     "by": "por"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "subtitle": "Lo sentimos, la página que buscas no existe o ha sido movida.",
+    "errorCode": "Error 404"
   }
 }

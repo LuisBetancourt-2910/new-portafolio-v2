@@ -78,5 +78,10 @@
     "rights": "All rights reserved",
     "madeWith": "Made with",
     "by": "by"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "Sorry, the page you are looking for does not exist or has been moved.",
+    "errorCode": "Error 404"
   }
 }
