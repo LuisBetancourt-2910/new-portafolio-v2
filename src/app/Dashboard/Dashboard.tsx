@@ -562,7 +562,7 @@ export default function Dashboard() {
                         José Luis García Betancourt
                       </h4>
                       <p className="text-slate-200 text-sm">
-                        Full Stack Developer | Ingeniero en Sistemas Computacionales
+                        {t('profile.title')} | {t('profile.subtitle')}
                       </p>
                     </div>
                     <InteractiveHoverButton
