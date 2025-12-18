@@ -24,6 +24,7 @@ export default function Dashboard() {
   const t = useTranslations();
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [locale, setLocale] = useState<"es" | "en">("es");
 
   // Refs para scroll animations
   const aboutRef = useRef(null);
@@ -42,6 +43,27 @@ export default function Dashboard() {
   useEffect(() => {
     // Scroll to top on component mount
     window.scrollTo(0, 0);
+    
+    // Detectar el idioma actual
+    const currentLocale = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("locale="))
+      ?.split("=")[1] as "es" | "en" | undefined;
+    
+    if (currentLocale) {
+      setLocale(currentLocale);
+    }
+
+    // Escuchar cambios de idioma
+    const handleLocaleChange = (event: CustomEvent) => {
+      setLocale(event.detail.locale);
+    };
+
+    window.addEventListener('localeChange', handleLocaleChange as EventListener);
+
+    return () => {
+      window.removeEventListener('localeChange', handleLocaleChange as EventListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -524,7 +546,7 @@ export default function Dashboard() {
                 {/* CV Image Preview Background */}
                 <div className="relative w-full h-[600px] overflow-hidden">
                   <img
-                    src="/cv.png"
+                    src={locale === "en" ? "/cv-en.png" : "/cv-es.png"}
                     alt="CV Preview"
                     className="w-full h-full object-contain object-center bg-white"
                   />

@@ -32,6 +32,9 @@ export function LanguageToggler() {
         // Update state immediately for visual feedback
         setLocale(newLocale);
 
+        // Dispatch custom event for other components to listen
+        window.dispatchEvent(new CustomEvent('localeChange', { detail: { locale: newLocale } }));
+
         // Use Next.js router to refresh without full page reload
         startTransition(() => {
             router.refresh();
