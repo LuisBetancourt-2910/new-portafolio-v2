@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTranslations } from 'next-intl';
 import Particles from "@/components/Backgrounds/Particles";
+import MatrixRain from "@/components/Backgrounds/MatrixRain";
 import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
 import { LanguageToggler } from "@/components/LanguageToggler/language-toggler";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
@@ -25,6 +26,9 @@ export default function Dashboard() {
   const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locale, setLocale] = useState<"es" | "en">("es");
+  const [matrixMode, setMatrixMode] = useState(false);
+  const [mKeyPresses, setMKeyPresses] = useState(0);
+  const mKeyTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Refs para scroll animations
   const aboutRef = useRef(null);
@@ -61,10 +65,49 @@ export default function Dashboard() {
 
     window.addEventListener('localeChange', handleLocaleChange as EventListener);
 
+    // Easter egg: detectar tecla "M" 3 veces
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'm') {
+        setMKeyPresses(prev => {
+          const newCount = prev + 1;
+          
+          // Resetear el contador después de 2 segundos
+          if (mKeyTimerRef.current) {
+            clearTimeout(mKeyTimerRef.current);
+          }
+          mKeyTimerRef.current = setTimeout(() => {
+            setMKeyPresses(0);
+          }, 2000);
+
+          // Activar Matrix mode al tercer press
+          if (newCount === 3) {
+            setMatrixMode(true);
+            setMKeyPresses(0);
+            if (mKeyTimerRef.current) {
+              clearTimeout(mKeyTimerRef.current);
+            }
+          }
+
+          return newCount;
+        });
+      }
+
+      // Salir del Matrix mode con Escape
+      if (e.key === 'Escape' && matrixMode) {
+        setMatrixMode(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
     return () => {
       window.removeEventListener('localeChange', handleLocaleChange as EventListener);
+      window.removeEventListener('keydown', handleKeyPress);
+      if (mKeyTimerRef.current) {
+        clearTimeout(mKeyTimerRef.current);
+      }
     };
-  }, []);
+  }, [matrixMode]);
 
   useEffect(() => {
     // Verificar el tema inicial
@@ -105,37 +148,146 @@ export default function Dashboard() {
         <AnimatedThemeToggler className="p-3 rounded-full bg-slate-900/10 dark:bg-white/10 backdrop-blur-sm border border-slate-900/20 dark:border-white/20 hover:bg-slate-900/20 dark:hover:bg-white/20 transition-all text-slate-900 dark:text-white" />
       </div>
 
-      {/* Particles Background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          width: "100%",
-          height: "100vh",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 1,
-          willChange: "transform",
-          transform: "translateZ(0)",
-        }}
-      >
-        <div className="pointer-events-none w-full h-full">
-          <Particles
-            particleColors={
-              isDark
-                ? ["#ffffff", "#ffffff"]
-                : ["#1e293b", "#334155", "#475569"]
-            }
-            particleCount={200}
-            particleSpread={10}
-            speed={0.1}
-            particleBaseSize={100}
-            moveParticlesOnHover={true}
-            alphaParticles={false}
-            disableRotation={false}
-          />
-        </div>
-      </div>
+      {/* Background: Matrix Rain o Particles */}
+      <AnimatePresence mode="wait">
+        {matrixMode ? (
+          <motion.div
+            key="matrix"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              width: "100%",
+              height: "100vh",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              zIndex: 1,
+            }}
+          >
+            <MatrixRain
+              techStack={[
+                'React', 'TypeScript', 'Next.js', 'Node.js', 'JavaScript',
+                'Laravel', 'PHP', 'SQL Server', 'AWS', 'Docker', 'Git',
+                'HTML', 'CSS', 'Tailwind', 'C#', '.NET', 'Angular',
+                'MySQL', 'Express', 'REST API', 'GraphQL', 'Vite'
+              ]}
+              speed={1.2}
+              fontSize={14}
+              density={0.92}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="particles"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              width: "100%",
+              height: "100vh",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              zIndex: 1,
+              willChange: "transform",
+              transform: "translateZ(0)",
+            }}
+          >
+            <div className="pointer-events-none w-full h-full">
+              <Particles
+                particleColors={
+                  isDark
+                    ? ["#ffffff", "#ffffff"]
+                    : ["#1e293b", "#334155", "#475569"]
+                }
+                particleCount={200}
+                particleSpread={10}
+                speed={0.1}
+                particleBaseSize={100}
+                moveParticlesOnHover={true}
+                alphaParticles={false}
+                disableRotation={false}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Matrix Mode Badge */}
+      <AnimatePresence>
+        {matrixMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full bg-black/80 border border-green-500/50 backdrop-blur-md pointer-events-none"
+          >
+            <p className="text-green-400 font-mono text-sm flex items-center gap-2">
+              <span className="animate-pulse">●</span>
+              MATRIX MODE ACTIVATED • Press ESC to exit
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Matrix Mode Style Override */}
+      {matrixMode && (
+        <style jsx global>{`
+          .dark,
+          html {
+            color-scheme: dark !important;
+          }
+          * {
+            color: #4ade80 !important;
+          }
+          h1, h2, h3, h4, h5, h6 {
+            background: linear-gradient(to right, #4ade80, #22c55e) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+          }
+          .bg-white\\/10,
+          .dark\\:bg-black\\/20,
+          .bg-slate-900\\/10,
+          .dark\\:bg-white\\/10 {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+          }
+          .border-slate-900\\/10,
+          .dark\\:border-white\\/10,
+          .border-slate-900\\/20,
+          .dark\\:border-white\\/20 {
+            border-color: rgba(34, 197, 94, 0.3) !important;
+          }
+          button, a {
+            color: #4ade80 !important;
+          }
+          /* Dock icons with green background */
+          [class*="dock"] button,
+          [class*="Dock"] button,
+          nav button {
+            background-color: rgba(74, 222, 128, 0.15) !important;
+            border-color: rgba(74, 222, 128, 0.4) !important;
+          }
+          [class*="dock"] button:hover,
+          [class*="Dock"] button:hover,
+          nav button:hover {
+            background-color: rgba(74, 222, 128, 0.25) !important;
+            border-color: rgba(74, 222, 128, 0.6) !important;
+          }
+          [class*="dock"] svg,
+          [class*="Dock"] svg,
+          nav svg {
+            color: #22c55e !important;
+            fill: currentColor !important;
+            filter: drop-shadow(0 0 2px rgba(74, 222, 128, 0.5));
+          }
+        `}</style>
+      )}
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center min-h-screen px-4 py-8 pt-32 pointer-events-none">
