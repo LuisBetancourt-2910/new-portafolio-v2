@@ -70,9 +70,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.svg?v=2",
-    shortcut: "/icon.svg?v=2",
-    apple: "/icon.svg?v=2",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/avatar.png",
   },
   openGraph: {
     title: "José Luis García Betancourt — Full Stack Developer",
@@ -107,6 +107,45 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/avatar.png" as="image" type="image/png" fetchPriority="high" />
+        {/* JSON-LD Structured Data para Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "José Luis García Betancourt",
+              "alternateName": "Luis Betancourt",
+              "url": "https://betanworks.dev",
+              "image": "https://betanworks.dev/avatar.png",
+              "logo": "https://betanworks.dev/icon.svg",
+              "sameAs": [
+                "https://github.com/LuisBetancourt-2910",
+                "https://www.linkedin.com/in/luisbetancourt2910"
+              ],
+              "jobTitle": "Full Stack Developer",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "BetanWorks"
+              },
+              "knowsAbout": [
+                "JavaScript",
+                "TypeScript",
+                "React",
+                "Angular",
+                "Node.js",
+                "PHP",
+                "Laravel",
+                ".NET",
+                "C#",
+                "AWS",
+                "SQL Server",
+                "MySQL"
+              ],
+              "description": "Full Stack Developer e Ingeniero en Sistemas Computacionales especializado en desarrollo web empresarial, sistemas ERP y soluciones cloud."
+            })
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
