@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '/opengraph-image',
+        url: 'https://betanworks.dev/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'José Luis García Betancourt — Full Stack Developer',
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "José Luis García Betancourt — Full Stack Developer",
     description: "Full Stack Developer especializado en JavaScript, TypeScript, React, Angular, Node.js, PHP, Laravel, .NET y AWS.",
-    images: ['/opengraph-image'],
+    images: ['https://betanworks.dev/opengraph-image'],
   },
   alternates: {
     canonical: 'https://betanworks.dev',
