@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
-    apple: "/avatar.png",
+    apple: "/avatar.webp",
   },
   openGraph: {
     title: "José Luis García Betancourt — Full Stack Developer",
@@ -116,7 +116,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/avatar.png" as="image" type="image/png" fetchPriority="high" />
+        <link rel="preload" href="/avatar.webp" as="image" type="image/webp" fetchPriority="high" />
         {/* JSON-LD Structured Data para Google */}
         <script
           type="application/ld+json"
@@ -127,7 +127,7 @@ export default async function RootLayout({
               "name": "José Luis García Betancourt",
               "alternateName": "Luis Betancourt",
               "url": "https://betanworks.dev",
-              "image": "https://betanworks.dev/avatar.png",
+              "image": "https://betanworks.dev/avatar.webp",
               "logo": "https://betanworks.dev/icon.svg",
               "sameAs": [
                 "https://github.com/LuisBetancourt-2910",

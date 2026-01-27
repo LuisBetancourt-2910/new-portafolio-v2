@@ -329,7 +329,7 @@ export default function Dashboard() {
                   handle={t('profile.handle')}
                   status={t('profile.status')}
                   contactText={t('profile.contactBtn')}
-                  avatarUrl="/avatar.png"
+                  avatarUrl="/avatar.webp"
                   grainUrl="https://grainy-gradients.vercel.app/noise.svg"
                   showUserInfo={true}
                   enableTilt={true}
@@ -370,7 +370,7 @@ export default function Dashboard() {
                 background={
                   <>
                     <img 
-                      src="/projects/erp-ggl/cover.png" 
+                      src="/projects/erp-ggl/cover.webp" 
                       alt="ERP GGL Dashboard"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -389,7 +389,7 @@ export default function Dashboard() {
                 background={
                   <>
                     <img 
-                      src="/projects/legacy/cover.png" 
+                      src="/projects/legacy/cover.webp" 
                       alt="LEGACY Platform"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -408,7 +408,7 @@ export default function Dashboard() {
                 background={
                   <>
                     <img 
-                      src="/projects/cosmocarrier/cover.png" 
+                      src="/projects/cosmocarrier/cover.webp" 
                       alt="COSMOCARRIER Platform"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -446,7 +446,7 @@ export default function Dashboard() {
                 background={
                   <>
                     <img 
-                      src="/projects/noc/cover.png" 
+                      src="/projects/noc/cover.webp" 
                       alt="NOC Platform"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -484,7 +484,7 @@ export default function Dashboard() {
                 background={
                   <>
                     <img 
-                      src="/projects/MultasDGO/cover.png" 
+                      src="/projects/MultasDGO/cover.webp" 
                       alt="Centro Multipagos"
                       className="absolute inset-0 w-full h-full object-cover"
                     />
@@ -698,7 +698,7 @@ export default function Dashboard() {
                 {/* CV Image Preview Background */}
                 <div className="relative w-full h-[600px] overflow-hidden">
                   <img
-                    src={locale === "en" ? "/cv-en.png" : "/cv-es.png"}
+                    src={locale === "en" ? "/cv-en.webp" : "/cv-es.webp"}
                     alt="CV Preview"
                     className="w-full h-full object-contain object-center bg-white"
                   />

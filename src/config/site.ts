@@ -24,11 +24,11 @@ export const siteConfig = {
   cv: {
     apiEndpoint: '/api/cv',
     fileName: 'cv-luis-betancourt.pdf',
-    previewImage: '/cv.png',
+    previewImage: '/cv.webp',
   },
   
   // Assets
-  avatar: '/avatar.png',
+  avatar: '/avatar.webp',
   icon: '/icon.svg',
   
   // Projects
@@ -36,21 +36,21 @@ export const siteConfig = {
     {
       id: 'erp-ggl',
       name: 'ERP GGL',
-      image: '/projects/erp-ggl/cover.png',
+      image: '/projects/erp-ggl/cover.webp',
       technologies: ['Laravel', 'PHP', 'AngularJS', 'MariaDB'],
       category: 'ERP',
     },
     {
       id: 'legacy',
       name: 'Legacy',
-      image: '/projects/legacy/cover.png',
+      image: '/projects/legacy/cover.webp',
       technologies: ['React', 'Inertia.js', 'Laravel', 'Sanctum'],
       category: 'Networking',
     },
     {
       id: 'cosmocarrier',
       name: 'CosmoCarrier',
-      image: '/projects/cosmocarrier/cover.png',
+      image: '/projects/cosmocarrier/cover.webp',
       technologies: ['React', 'Laravel', 'ROI Calculator'],
       category: 'Quotation',
     },
@@ -64,7 +64,7 @@ export const siteConfig = {
     {
       id: 'noc',
       name: 'NOC',
-      image: '/projects/noc/cover.png',
+      image: '/projects/noc/cover.webp',
       technologies: ['React', 'Vite', 'API Integration'],
       category: 'Operations',
     },
@@ -78,7 +78,7 @@ export const siteConfig = {
     {
       id: 'multas',
       name: 'Centro Multipagos',
-      image: '/projects/MultasDGO/cover.png',
+      image: '/projects/MultasDGO/cover.webp',
       technologies: ['Laravel', 'React', 'AWS S3', 'Digital Signatures'],
       category: 'Government',
     },
