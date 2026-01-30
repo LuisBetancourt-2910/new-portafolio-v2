@@ -1,15 +1,9 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTranslations } from 'next-intl';
-import Particles from "@/components/Backgrounds/Particles";
-import MatrixRain from "@/components/Backgrounds/MatrixRain";
-import { AnimatedThemeToggler } from "@/components/Theme Toggler/animated-theme-toggler";
-import { LanguageToggler } from "@/components/LanguageToggler/language-toggler";
-import ProfileCard from "@/components/ProfileCard/ProfileCard";
-import { IconCloud } from "@/components/ui/icon-cloud";
-import { Dock, DockIcon } from "@/components/ui/dock";
 import { Home, User, Briefcase, Mail, Github, Linkedin, Code, FileText, Rocket, Database, Shield, Menu, X, Download, FileCheck, BarChart3 } from "lucide-react";
 import {
   Tooltip,
@@ -17,9 +11,49 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
-import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
+
+// Dynamic imports para reducir FCP - Componentes pesados cargados después del first paint
+const Particles = dynamic(() => import("@/components/Backgrounds/Particles"), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
+
+const MatrixRain = dynamic(() => import("@/components/Backgrounds/MatrixRain"), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
+
+const AnimatedThemeToggler = dynamic(
+  () => import("@/components/Theme Toggler/animated-theme-toggler").then(mod => ({ default: mod.AnimatedThemeToggler })),
+  { ssr: false }
+);
+
+const LanguageToggler = dynamic(
+  () => import("@/components/LanguageToggler/language-toggler").then(mod => ({ default: mod.LanguageToggler })),
+  { ssr: false }
+);
+
+const ProfileCard = dynamic(() => import("@/components/ProfileCard/ProfileCard"), {
+  ssr: true, // Este sí necesita SSR por ser contenido crítico
+  loading: () => (
+    <div className="w-full h-[540px] rounded-[30px] bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 animate-pulse" />
+  )
+});
+
+const IconCloud = dynamic(() => import("@/components/ui/icon-cloud").then(mod => ({ default: mod.IconCloud })), {
+  ssr: false,
+  loading: () => <div className="w-full h-[400px] animate-pulse bg-white/5 rounded-full" />
+});
+
+const BentoGrid = dynamic(() => import("@/components/ui/bento-grid").then(mod => ({ default: mod.BentoGrid })), { ssr: true });
+const BentoCard = dynamic(() => import("@/components/ui/bento-grid").then(mod => ({ default: mod.BentoCard })), { ssr: true });
+
+const InteractiveHoverButton = dynamic(() => import("@/components/ui/interactive-hover-button").then(mod => ({ default: mod.InteractiveHoverButton })), { ssr: false });
+
+const AnimatedCounter = dynamic(() => import("@/components/ui/animated-counter").then(mod => ({ default: mod.AnimatedCounter })), { ssr: false });
+
+const Dock = dynamic(() => import("@/components/ui/dock").then(mod => ({ default: mod.Dock })), { ssr: false });
+const DockIcon = dynamic(() => import("@/components/ui/dock").then(mod => ({ default: mod.DockIcon })), { ssr: false });
 
 export default function Dashboard() {
   const t = useTranslations();
