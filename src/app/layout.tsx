@@ -72,9 +72,22 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/avatar.webp",
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/icon.svg',
+        color: '#0F172A',
+      },
+    ],
   },
   openGraph: {
     title: "José Luis García Betancourt — Full Stack Developer",
@@ -106,6 +119,14 @@ export const metadata: Metadata = {
       'en': 'https://betanworks.dev/en',
     },
   },
+  verification: {
+    google: 'tu-codigo-de-verificacion-aqui', // Agregar desde Google Search Console
+  },
+  other: {
+    'msapplication-TileColor': '#0F172A',
+    'theme-color': '#0F172A',
+  },
+  manifest: '/manifest.json',
 };
 
 export default async function RootLayout({
@@ -129,33 +150,8 @@ export default async function RootLayout({
           .dark body {
             background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
           }
-          #fcp-skeleton {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            pointer-events: none;
-          }
-          #fcp-skeleton .skeleton-card {
-            width: 90%;
-            max-width: 400px;
-            height: 500px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 30px;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-          }
-          .dark #fcp-skeleton .skeleton-card {
-            background: rgba(0,0,0,0.2);
-          }
-          @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-          }
         `}} />
         
-        <link rel="preload" href="/avatar.webp" as="image" type="image/webp" fetchPriority="high" />
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         
         {/* JSON-LD Structured Data para Google */}
@@ -218,29 +214,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        {/* Skeleton inicial para FCP - Se oculta cuando carga el contenido real */}
-        <div id="fcp-skeleton">
-          <div className="skeleton-card"></div>
-        </div>
-        
         <AnimatedTitle />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
         <SpeedInsights />
         <Analytics />
-        
-        {/* Script para ocultar skeleton cuando el contenido carga */}
-        <script dangerouslySetInnerHTML={{__html: `
-          window.addEventListener('load', function() {
-            const skeleton = document.getElementById('fcp-skeleton');
-            if (skeleton) {
-              skeleton.style.opacity = '0';
-              skeleton.style.transition = 'opacity 0.3s ease-out';
-              setTimeout(() => skeleton.remove(), 300);
-            }
-          });
-        `}} />
       </body>
     </html>
   );

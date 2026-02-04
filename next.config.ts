@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    unoptimized: false, // Asegurar que las imágenes se optimicen
+    unoptimized: false,
+    qualities: [75, 90, 95], // Calidades configuradas para optimización
   },
   // Optimizar para Firefox y otros navegadores
   experimental: {

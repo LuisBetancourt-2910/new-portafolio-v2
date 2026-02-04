@@ -21,7 +21,7 @@ const adjust = (v: number, fMin: number, fMax: number, tMin: number, tMax: numbe
 interface ProfileCardProps {
   avatarUrl?: string;
   iconUrl?: string;
-  grainUrl?: "https://grainy-gradients.vercel.app/noise.svg";
+  grainUrl?: "/noise.svg";
   innerGradient?: string;
   behindGlowEnabled?: boolean;
   behindGlowColor?: string;
@@ -347,6 +347,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 width={530}
                 height={470}
                 priority
+                loading="eager"
+                fetchPriority="high"
                 quality={95}
                 sizes="(max-width: 480px) 100vw, (max-width: 768px) 70vw, 540px"
                 style={{

@@ -364,7 +364,7 @@ export default function Dashboard() {
                   status={t('profile.status')}
                   contactText={t('profile.contactBtn')}
                   avatarUrl="/avatar.webp"
-                  grainUrl="https://grainy-gradients.vercel.app/noise.svg"
+                  grainUrl="/noise.svg"
                   showUserInfo={true}
                   enableTilt={true}
                   enableMobileTilt={false}
