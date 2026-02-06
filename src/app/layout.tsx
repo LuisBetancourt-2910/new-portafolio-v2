@@ -164,7 +164,7 @@ export default async function RootLayout({
               "name": "José Luis García Betancourt",
               "alternateName": "Luis Betancourt",
               "url": "https://betanworks.dev",
-              "image": "https://betanworks.dev/avatar.webp",
+              "image": "https://betanworks.dev/icon.svg",
               "logo": "https://betanworks.dev/icon.svg",
               "sameAs": [
                 "https://github.com/LuisBetancourt-2910",
