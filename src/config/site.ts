@@ -3,6 +3,15 @@
  * Centralized configuration for the portfolio website
  */
 
+export interface Project {
+  id: string;
+  name: string;
+  image: string;
+  technologies: string[];
+  category: string;
+  url?: string;
+}
+
 export const siteConfig = {
   // Personal Information
   name: 'Luis Betancourt',
@@ -82,7 +91,7 @@ export const siteConfig = {
       technologies: ['Laravel', 'React', 'AWS S3', 'Digital Signatures'],
       category: 'Government',
     },
-  ],
+  ] satisfies readonly Project[],
   
   // Tech Stack Icons
   techStack: [

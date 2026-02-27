@@ -3,8 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getLocale, getMessages, getTranslations } from 'next-intl/server';
 import { AnimatedTitle } from '@/components/AnimatedTitle';
+import { siteConfig } from '@/config/site';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -134,10 +135,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   const messages = await getMessages();
+  const t = await getTranslations();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         {/* Critical CSS para FCP - Inline styles para render inmediato */}
         <style dangerouslySetInnerHTML={{__html: `
@@ -167,8 +170,8 @@ export default async function RootLayout({
               "image": "https://betanworks.dev/icon.svg",
               "logo": "https://betanworks.dev/icon.svg",
               "sameAs": [
-                "https://github.com/LuisBetancourt-2910",
-                "https://www.linkedin.com/in/luisbetancourt2910"
+                siteConfig.socials.github,
+                siteConfig.socials.linkedin
               ],
               "jobTitle": "Full Stack Developer",
               "worksFor": {
@@ -214,7 +217,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <AnimatedTitle />
+        <AnimatedTitle title={t('animatedTitle')} />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
