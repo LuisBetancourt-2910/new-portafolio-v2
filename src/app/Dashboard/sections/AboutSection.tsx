@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSharedIntersectionObserver } from "@/hooks/useSharedIntersectionObserver";
 import { useTranslations } from "next-intl";
 import { siteConfig } from "@/config/site";
 
@@ -16,19 +17,26 @@ const ProfileCard = dynamic(
   }
 );
 
-export default function AboutSection() {
+const AboutSection = React.memo(function AboutSection() {
   const t = useTranslations();
-  const aboutRef = useRef(null);
-  const aboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
+  const { ref, isInView } = useSharedIntersectionObserver({ threshold: 0.3, once: true });
 
   return (
     <motion.div
       id="about"
-      ref={aboutRef}
+      ref={ref}
       className="w-full"
       initial={{ opacity: 0, y: 50 }}
-      animate={aboutInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationStart={() => {
+        const el = document.getElementById("about");
+        if (el) el.style.willChange = "transform, opacity";
+      }}
+      onAnimationComplete={() => {
+        const el = document.getElementById("about");
+        if (el) el.style.willChange = "auto";
+      }}
     >
       <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-8 lg:gap-12">
         {/* About Me - Left on Desktop, Bottom on Mobile */}
@@ -71,4 +79,6 @@ export default function AboutSection() {
       </div>
     </motion.div>
   );
-}
+});
+
+export default AboutSection;

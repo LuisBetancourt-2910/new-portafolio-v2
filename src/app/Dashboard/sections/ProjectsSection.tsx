@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSharedIntersectionObserver } from "@/hooks/useSharedIntersectionObserver";
 import { useTranslations } from "next-intl";
 import {
   Briefcase,
@@ -15,6 +16,10 @@ import {
   Shield,
 } from "lucide-react";
 import { siteConfig, type Project } from "@/config/site";
+
+/** Tiny 1x1 pixel base64 placeholder for blur-up effect on project images */
+const BLUR_DATA_URL =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg==";
 
 const BentoGrid = dynamic(
   () =>
@@ -42,25 +47,32 @@ const projectIcons: Record<string, React.ElementType> = {
   multas: FileCheck,
 };
 
-export default function ProjectsSection() {
+const ProjectsSection = React.memo(function ProjectsSection() {
   const t = useTranslations();
-  const projectsRef = useRef(null);
-  const projectsInView = useInView(projectsRef, { once: true, amount: 0.1 });
+  const { ref, isInView } = useSharedIntersectionObserver({ threshold: 0.1, once: true, rootMargin: "0px 0px 200px 0px" });
 
   return (
     <motion.div
       id="projects"
-      ref={projectsRef}
+      ref={ref}
       className="flex flex-col items-center gap-8 pt-32 pointer-events-auto"
       initial={{ opacity: 0, y: 50 }}
-      animate={projectsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationStart={() => {
+        const el = document.getElementById("projects");
+        if (el) el.style.willChange = "transform, opacity";
+      }}
+      onAnimationComplete={() => {
+        const el = document.getElementById("projects");
+        if (el) el.style.willChange = "auto";
+      }}
     >
       <motion.h3
         className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={
-          projectsInView
+          isInView
             ? { opacity: 1, scale: 1 }
             : { opacity: 0, scale: 0.9 }
         }
@@ -71,7 +83,7 @@ export default function ProjectsSection() {
       <motion.div
         className="w-full"
         initial={{ opacity: 0 }}
-        animate={projectsInView ? { opacity: 1 } : { opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
         <BentoGrid className="w-full">
@@ -92,6 +104,10 @@ export default function ProjectsSection() {
                         alt={`${project.name} – ${t(`projects.${translationKey}.description`)}`}
                         fill
                         className="object-cover"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA_URL}
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
@@ -155,7 +171,9 @@ export default function ProjectsSection() {
       </motion.div>
     </motion.div>
   );
-}
+});
+
+export default ProjectsSection;
 
 /** Map project IDs to their i18n translation key prefixes */
 const projectTranslationKeys: Record<string, string> = {

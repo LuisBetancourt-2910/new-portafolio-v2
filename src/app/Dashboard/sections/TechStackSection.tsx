@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSharedIntersectionObserver } from "@/hooks/useSharedIntersectionObserver";
 import { useTranslations } from "next-intl";
 import { siteConfig } from "@/config/site";
 
@@ -19,25 +20,32 @@ const IconCloud = dynamic(
   }
 );
 
-export default function TechStackSection() {
+const TechStackSection = React.memo(function TechStackSection() {
   const t = useTranslations();
-  const techStackRef = useRef(null);
-  const techStackInView = useInView(techStackRef, { once: true, amount: 0.3 });
+  const { ref, isInView } = useSharedIntersectionObserver({ threshold: 0.3, once: true, rootMargin: "0px 0px 200px 0px" });
 
   return (
     <motion.div
       id="techstack"
-      ref={techStackRef}
+      ref={ref}
       className="flex flex-col items-center gap-6 pb-8 pt-32 pointer-events-auto px-4"
       initial={{ opacity: 0, y: 50 }}
-      animate={techStackInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationStart={() => {
+        const el = document.getElementById("techstack");
+        if (el) el.style.willChange = "transform, opacity";
+      }}
+      onAnimationComplete={() => {
+        const el = document.getElementById("techstack");
+        if (el) el.style.willChange = "auto";
+      }}
     >
       <motion.h3
         className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={
-          techStackInView
+          isInView
             ? { opacity: 1, scale: 1 }
             : { opacity: 0, scale: 0.9 }
         }
@@ -49,7 +57,7 @@ export default function TechStackSection() {
         className="w-full max-w-[520px] md:max-w-[650px] flex justify-center"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={
-          techStackInView
+          isInView
             ? { opacity: 1, scale: 1 }
             : { opacity: 0, scale: 0.8 }
         }
@@ -59,4 +67,6 @@ export default function TechStackSection() {
       </motion.div>
     </motion.div>
   );
-}
+});
+
+export default TechStackSection;

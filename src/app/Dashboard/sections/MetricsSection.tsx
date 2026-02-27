@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSharedIntersectionObserver } from "@/hooks/useSharedIntersectionObserver";
 import { useTranslations } from "next-intl";
 
 const AnimatedCounter = dynamic(
@@ -10,28 +11,38 @@ const AnimatedCounter = dynamic(
     import("@/components/ui/animated-counter").then((mod) => ({
       default: mod.AnimatedCounter,
     })),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <span className="inline-block min-w-[2ch]">&nbsp;</span>,
+  }
 );
 
-export default function MetricsSection() {
+const MetricsSection = React.memo(function MetricsSection() {
   const t = useTranslations();
-  const metricsRef = useRef(null);
-  const metricsInView = useInView(metricsRef, { once: true, amount: 0.3 });
+  const { ref, isInView } = useSharedIntersectionObserver({ threshold: 0.3, once: true, rootMargin: "0px 0px 200px 0px" });
 
   return (
     <motion.div
       id="metrics"
-      ref={metricsRef}
+      ref={ref}
       className="flex flex-col items-center gap-8 w-full pointer-events-auto pt-16"
       initial={{ opacity: 0, y: 50 }}
-      animate={metricsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationStart={() => {
+        const el = document.getElementById("metrics");
+        if (el) el.style.willChange = "transform, opacity";
+      }}
+      onAnimationComplete={() => {
+        const el = document.getElementById("metrics");
+        if (el) el.style.willChange = "auto";
+      }}
     >
       <motion.h3
         className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={
-          metricsInView
+          isInView
             ? { opacity: 1, scale: 1 }
             : { opacity: 0, scale: 0.9 }
         }
@@ -45,7 +56,7 @@ export default function MetricsSection() {
           className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-xl"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={
-            metricsInView
+            isInView
               ? { opacity: 1, scale: 1 }
               : { opacity: 0, scale: 0.8 }
           }
@@ -64,7 +75,7 @@ export default function MetricsSection() {
           className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-xl"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={
-            metricsInView
+            isInView
               ? { opacity: 1, scale: 1 }
               : { opacity: 0, scale: 0.8 }
           }
@@ -83,7 +94,7 @@ export default function MetricsSection() {
           className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-xl"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={
-            metricsInView
+            isInView
               ? { opacity: 1, scale: 1 }
               : { opacity: 0, scale: 0.8 }
           }
@@ -102,7 +113,7 @@ export default function MetricsSection() {
           className="flex flex-col items-center justify-center p-6 lg:p-8 rounded-2xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-xl"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={
-            metricsInView
+            isInView
               ? { opacity: 1, scale: 1 }
               : { opacity: 0, scale: 0.8 }
           }
@@ -118,4 +129,6 @@ export default function MetricsSection() {
       </div>
     </motion.div>
   );
-}
+});
+
+export default MetricsSection;

@@ -1,7 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMobileDetect } from "@/hooks/useMobileDetect";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const Particles = dynamic(() => import("@/components/Backgrounds/Particles"), {
   ssr: false,
@@ -25,6 +28,23 @@ export default function BackgroundManager({
   matrixMode,
   isDark,
 }: BackgroundManagerProps) {
+  const isMobile = useMobileDetect();
+  const reducedMotion = useReducedMotion();
+
+  const particleConfig = useMemo(
+    () => ({
+      particleCount: isMobile ? 80 : 200,
+      moveParticlesOnHover: !isMobile,
+      speed: reducedMotion ? 0.02 : 0.1,
+      disableRotation: reducedMotion,
+      pixelRatio:
+        typeof window !== "undefined"
+          ? Math.min(window.devicePixelRatio, 1.5)
+          : 1,
+    }),
+    [isMobile, reducedMotion]
+  );
+
   return (
     <AnimatePresence mode="wait">
       {matrixMode ? (
@@ -100,13 +120,14 @@ export default function BackgroundManager({
                   ? ["#ffffff", "#ffffff"]
                   : ["#1e293b", "#334155", "#475569"]
               }
-              particleCount={200}
+              particleCount={particleConfig.particleCount}
               particleSpread={10}
-              speed={0.1}
+              speed={particleConfig.speed}
               particleBaseSize={100}
-              moveParticlesOnHover={true}
+              moveParticlesOnHover={particleConfig.moveParticlesOnHover}
               alphaParticles={false}
-              disableRotation={false}
+              disableRotation={particleConfig.disableRotation}
+              pixelRatio={particleConfig.pixelRatio}
             />
           </div>
         </motion.div>

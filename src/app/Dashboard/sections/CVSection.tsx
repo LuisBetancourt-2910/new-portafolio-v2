@@ -1,11 +1,15 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSharedIntersectionObserver } from "@/hooks/useSharedIntersectionObserver";
 import { useTranslations } from "next-intl";
 import { siteConfig } from "@/config/site";
+
+const CV_BLUR_DATA_URL =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg==";
 
 const InteractiveHoverButton = dynamic(
   () =>
@@ -15,10 +19,9 @@ const InteractiveHoverButton = dynamic(
   { ssr: false }
 );
 
-export default function CVSection() {
+const CVSection = React.memo(function CVSection() {
   const t = useTranslations();
-  const cvRef = useRef(null);
-  const cvInView = useInView(cvRef, { once: true, amount: 0.3 });
+  const { ref, isInView } = useSharedIntersectionObserver({ threshold: 0.3, once: true, rootMargin: "0px 0px 200px 0px" });
   const [locale, setLocale] = useState<"es" | "en">("es");
 
   useEffect(() => {
@@ -41,24 +44,36 @@ export default function CVSection() {
     };
   }, []);
 
+  const altCvImage = locale === "es" ? "/cv-en.webp" : "/cv-es.webp";
+
   const downloadCV = () => {
     window.location.href = siteConfig.cv.apiEndpoint;
   };
 
   return (
-    <motion.div
+    <>
+      <link rel="prefetch" href={altCvImage} as="image" />
+      <motion.div
       id="cv"
-      ref={cvRef}
+      ref={ref}
       className="flex flex-col items-center gap-8 pt-32 pb-16 pointer-events-auto"
       initial={{ opacity: 0, y: 50 }}
-      animate={cvInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
+      onAnimationStart={() => {
+        const el = document.getElementById("cv");
+        if (el) el.style.willChange = "transform, opacity";
+      }}
+      onAnimationComplete={() => {
+        const el = document.getElementById("cv");
+        if (el) el.style.willChange = "auto";
+      }}
     >
       <motion.h3
         className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={
-          cvInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
+          isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
         }
         transition={{ duration: 0.5, delay: 0.2 }}
       >
@@ -67,7 +82,7 @@ export default function CVSection() {
       <motion.div
         className="w-full max-w-4xl"
         initial={{ opacity: 0, y: 30 }}
-        animate={cvInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         <div className="relative group overflow-hidden rounded-3xl bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl">
@@ -77,6 +92,9 @@ export default function CVSection() {
               src={locale === "en" ? "/cv-en.webp" : "/cv-es.webp"}
               alt={`Curriculum Vitae preview - ${siteConfig.fullName}, ${siteConfig.title}`}
               fill
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL={CV_BLUR_DATA_URL}
               className="object-cover object-center bg-white"
             />
             {/* Overlay with gradient */}
@@ -105,5 +123,8 @@ export default function CVSection() {
         </div>
       </motion.div>
     </motion.div>
+    </>
   );
-}
+});
+
+export default CVSection;

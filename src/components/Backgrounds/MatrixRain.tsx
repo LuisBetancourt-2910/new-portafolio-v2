@@ -102,9 +102,26 @@ export default function MatrixRain({
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    animationFrameId = requestAnimationFrame(draw);
+    // Pausa por visibilidad: cancelar rAF cuando la pestaña se oculta,
+    // reanudar cuando vuelve a ser visible (Requisitos 3.3, 3.4)
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(draw);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Iniciar el loop solo si la pestaña es visible
+    if (!document.hidden) {
+      animationFrameId = requestAnimationFrame(draw);
+    }
 
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', setCanvasSize);
       cancelAnimationFrame(animationFrameId);
     };

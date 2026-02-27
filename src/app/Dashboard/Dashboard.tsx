@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useMatrixMode } from "@/hooks/useMatrixMode";
+import { useMobileMenu } from "@/hooks/useMobileMenu";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -30,8 +32,8 @@ const LanguageToggler = dynamic(
 
 export default function Dashboard() {
   const [isDark, setIsDark] = useState(false);
-  const [matrixMode, setMatrixMode] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { matrixMode, setMatrixMode } = useMatrixMode();
+  const { mobileMenuOpen, setMobileMenuOpen, closeMobileMenu } = useMobileMenu();
 
   // Observe dark mode from html element's class
   useEffect(() => {
@@ -54,11 +56,11 @@ export default function Dashboard() {
     window.scrollTo(0, 0);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = useCallback((sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    setMobileMenuOpen(false);
-  };
+    closeMobileMenu();
+  }, [closeMobileMenu]);
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors duration-400">
