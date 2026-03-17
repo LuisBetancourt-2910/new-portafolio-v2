@@ -12,6 +12,7 @@ import ProjectsSection from "./sections/ProjectsSection";
 import TechStackSection from "./sections/TechStackSection";
 import MetricsSection from "./sections/MetricsSection";
 import CVSection from "./sections/CVSection";
+import FooterSection from "./sections/FooterSection";
 
 // UI components
 import NavigationDock from "./components/NavigationDock";
@@ -120,6 +121,7 @@ export default function Dashboard() {
           <TechStackSection />
           <MetricsSection />
           <CVSection />
+          <FooterSection />
         </div>
       </div>
     </div>

@@ -79,7 +79,9 @@
   "footer": {
     "rights": "Todos los derechos reservados",
     "madeWith": "Hecho con",
-    "by": "por"
+    "by": "por",
+    "quickLinks": "Acceso Rápido",
+    "scrollToTop": "Volver arriba"
   },
   "notFound": {
     "title": "Página no encontrada",
