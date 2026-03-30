@@ -74,10 +74,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/web-app-manifest-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: '/favicon-96x96.png',
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
@@ -107,13 +110,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://betanworks.dev',
-    languages: {
-      'es': 'https://betanworks.dev/es',
-      'en': 'https://betanworks.dev/en',
-    },
-  },
-  verification: {
-    google: 'tu-codigo-de-verificacion-aqui', // Agregar desde Google Search Console
   },
   other: {
     'msapplication-TileColor': '#0F172A',
